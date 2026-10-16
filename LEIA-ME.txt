@@ -1,0 +1,17 @@
+ELITI COLOR — Landing page
+
+Para publicar: suba a pasta inteira (index.html + assets/) em qualquer hospedagem estática
+(Vercel, Netlify, Hostinger, GitHub Pages). Não há build nem dependências.
+
+Contatos (no index.html, seção "contacts"):
+  Tiago  (44) 99111-3969  -> https://wa.me/5544991113969
+  Eliel  (44) 99813-0641  -> https://wa.me/5544998130641
+Endereço: R. Minas Gerais, 894 - Centro -> link de busca no Google Maps
+
+Depois de publicar: troque o og:image no <head> pela URL absoluta da imagem.
+Para o mapa cair no pin exato, substitua o link do endereço pelo link "Compartilhar" do Google Maps da loja.
+
+Arquivos:
+  assets/eliticolor-bg.webm / .mp4  vídeo de fundo (loop sem corte, sem áudio)
+  assets/eliticolor-poster.jpg      imagem de fallback
+  assets/logo-eliticolor.webp/.png  logo original (apenas recorte das bordas transparentes)
