@@ -81,6 +81,7 @@
     $$(".tab").forEach(function (t) { var on = t.getAttribute("data-aba") === id; t.setAttribute("aria-selected", on ? "true" : "false"); t.tabIndex = on ? 0 : -1; if (on && focus) t.focus(); });
     $$(".cat-painel").forEach(function (p) { p.hidden = p.id !== "painel-" + id; });
     $$(".cat-painel:not([hidden]) .rv").forEach(function (r) { r.classList.add("in"); });
+    if (window.__trilho) window.__trilho();
   }
   tabs.addEventListener("click", function (e) { var t = e.target.closest(".tab"); if (t) setAba(t.getAttribute("data-aba")); });
   tabs.addEventListener("keydown", function (e) {
@@ -292,4 +293,47 @@
   setAba(state.aba);
   update();
   window.__eliti = { state: state, mensagem: mensagem, link: linkWhats, setAba: setAba };
+
+  /* ---------- catálogo na horizontal controlado pela rolagem ---------- */
+  (function () {
+    var trilho = $("#trilho"); if (!trilho) return;
+    var palco = $(".trilho-palco", trilho), barra = $(".trilho-barra", trilho);
+    var mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    var dist = 0, alvo = 0, atual = 0, raf = 0;
+    function track() { return $(".cat-painel:not([hidden]) .grid-cores", trilho); }
+    function medir() {
+      var on = !mq.matches;
+      document.documentElement.classList.toggle("h-on", on);
+      var t = track();
+      if (!on || !t) { trilho.style.height = ""; return; }
+      dist = Math.max(0, t.scrollWidth - palco.clientWidth);
+      trilho.style.height = (palco.offsetHeight + dist) + "px";
+      ler(); atual = alvo; pintar();
+    }
+    function ler() {
+      var topo = parseFloat(getComputedStyle(palco).top) || 0;
+      var p = dist ? (topo - trilho.getBoundingClientRect().top) / dist : 0;
+      alvo = Math.min(1, Math.max(0, p)) * dist;
+    }
+    function pintar() {
+      var t = track(); if (!t) return;
+      t.style.setProperty("--x", atual.toFixed(1));
+      barra.style.setProperty("--pr", dist ? (atual / dist).toFixed(4) : 0);
+    }
+    function loop() {
+      atual += (alvo - atual) * 0.18;
+      if (Math.abs(alvo - atual) < 0.4) atual = alvo;
+      pintar();
+      raf = atual !== alvo ? requestAnimationFrame(loop) : 0;
+    }
+    window.addEventListener("scroll", function () {
+      if (!document.documentElement.classList.contains("h-on")) return;
+      ler(); if (!raf) raf = requestAnimationFrame(loop);
+    }, { passive: true });
+    window.addEventListener("resize", medir);
+    if (mq.addEventListener) mq.addEventListener("change", medir);
+    window.addEventListener("load", medir);
+    window.__trilho = medir;
+    medir();
+  })();
 })();
