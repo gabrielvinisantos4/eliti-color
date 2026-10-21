@@ -5,13 +5,19 @@ Estrutura
   index.html        estrutura da página (hero, catálogo, seleção, obras, contato)
   css/estilo.css    visual e animações
   js/dados.js       >>> ÚNICO ARQUIVO PARA CADASTRAR CONTEÚDO <<<
-  js/app.js         lógica (catálogo, seleção, WhatsApp, galeria) — não precisa editar
+  js/app.js         lógica (catálogo, seleção, WhatsApp, galeria, vídeo no scroll) — não precisa editar
+  assets/lata/      quadros do vídeo da lata (d = computador, m = celular) + poster.webp
+  assets/produtos/  fotos reais das latas (Mercure: catálogo 2025)
   assets/           logo, vídeo de fundo e imagens
 
 Onde cadastrar (tudo em js/dados.js)
-  Cores     -> lista "cores":     { id, nome, codigo, hex }
-  Produtos  -> lista "produtos":  { id, nome, codigo, marca, descricao, imagem }
-               (a seção "Produtos" só aparece quando houver item cadastrado)
+  Catálogos -> lista "catalogos": cada catálogo vira uma aba (hoje: Coral e Mercure)
+               { id, marca, titulo, linha, itens: [...] }
+  Cores/produtos -> dentro de "itens" de cada catálogo:
+               { id, nome, codigo, hex, linhas, imagem, imagemAlt }
+               codigo/linhas/imagem são opcionais: o que não existir não aparece
+  Latas     -> arquivos em assets/produtos/ (PNG/WebP com fundo transparente),
+               ligados pelo campo "imagem" de cada item
   Obras     -> lista "obras":     { titulo, local, tipo, imagem, video }
                (coloque os arquivos em assets/obras/; enquanto a lista estiver
                vazia, a galeria mostra espaços reservados neutros)
@@ -20,5 +26,6 @@ Onde cadastrar (tudo em js/dados.js)
 
 Pendências
   - Confirmar com a loja os códigos e os tons (hex) das 9 cores Coral.
+  - Fotos reais das latas Coral (não há no projeto; os cards Coral mostram só a amostra).
   - Adicionar fotos/vídeos reais de obras em assets/obras/ e cadastrar em "obras".
   - Link do mapa: informar a cidade ou o link "Compartilhar" do Google Maps.

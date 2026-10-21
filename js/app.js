@@ -1,15 +1,13 @@
 /* =====================================================================
-   ELITI COLOR — catálogo interativo, seleção e pedido de orçamento
+   ELITI COLOR — catálogos, seleção, orçamento no WhatsApp, obras e
+   vídeo da lata controlado pelo scroll.
    Os dados ficam em js/dados.js. Este arquivo só monta a página.
    ===================================================================== */
 (function () {
   "use strict";
   var D = window.ELITI || {};
-  var CORES = D.cores || [], PRODUTOS = D.produtos || [], OBRAS = D.obras || [];
-  var ATEND = D.atendentes || [];
-  var MSG = D.mensagem || {};
+  var CATS = D.catalogos || [], OBRAS = D.obras || [], ATEND = D.atendentes || [], MSG = D.mensagem || {};
   var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-
   document.documentElement.classList.add("js");
 
   /* ---------- utilidades ---------- */
@@ -17,11 +15,7 @@
   function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
   function el(tag, attrs, html) {
     var e = document.createElement(tag);
-    if (attrs) Object.keys(attrs).forEach(function (k) {
-      if (k === "class") e.className = attrs[k];
-      else if (k === "style") e.setAttribute("style", attrs[k]);
-      else e.setAttribute(k, attrs[k]);
-    });
+    if (attrs) Object.keys(attrs).forEach(function (k) { if (k === "class") e.className = attrs[k]; else e.setAttribute(k, attrs[k]); });
     if (html != null) e.innerHTML = html;
     return e;
   }
@@ -32,88 +26,95 @@
   var ICON_PLUS = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';
   var ICON_X = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
 
-  /* ---------- catálogo: índice de itens selecionáveis ---------- */
+  /* ---------- índice de itens selecionáveis ---------- */
   var ITENS = {};
-  CORES.forEach(function (c) { ITENS["cor:" + c.id] = { key: "cor:" + c.id, tipo: "cor", nome: c.nome, codigo: c.codigo, hex: c.hex }; });
-  PRODUTOS.forEach(function (p) { ITENS["produto:" + p.id] = { key: "produto:" + p.id, tipo: "produto", nome: p.nome, codigo: p.codigo, imagem: p.imagem }; });
+  CATS.forEach(function (cat) {
+    (cat.itens || []).forEach(function (it) {
+      var key = cat.id + ":" + it.id;
+      ITENS[key] = { key: key, cat: cat.id, marca: cat.marca, nome: it.nome, codigo: it.codigo || "", hex: it.hex || "", linhas: it.linhas || [], imagem: it.imagem || "", imagemAlt: it.imagemAlt || "" };
+    });
+  });
 
-  /* ---------- estado ---------- */
-  var saved = store("eliti-selecao") || {};
+  /* ---------- estado (salvo só neste navegador) ---------- */
+  var saved = store("eliti-selecao-v2") || {};
   var state = {
     itens: (saved.itens || []).filter(function (k) { return ITENS[k]; }),
-    atendente: ATEND.some(function (a) { return a.id === saved.atendente; }) ? saved.atendente : (ATEND[0] && ATEND[0].id)
+    atendente: ATEND.some(function (a) { return a.id === saved.atendente; }) ? saved.atendente : (ATEND[0] && ATEND[0].id),
+    aba: CATS.some(function (c) { return c.id === saved.aba; }) ? saved.aba : (CATS[0] && CATS[0].id)
   };
-  function persist() { store("eliti-selecao", state); }
+  function persist() { store("eliti-selecao-v2", state); }
   function isSel(k) { return state.itens.indexOf(k) !== -1; }
+  function codTxt(it) { return it.codigo ? it.marca + " " + it.codigo : ""; }
 
-  /* ---------- render: cores ---------- */
-  function cardCor(c, i) {
-    var key = "cor:" + c.id;
-    var li = el("li", { class: "cor rv", "data-key": key, style: "--c:" + c.hex + ";--d:" + (i % 3) * 70 + "ms" });
+  /* ---------- render: abas + catálogos ---------- */
+  var tabs = $("#catTabs"), panels = $("#catPaineis");
+  CATS.forEach(function (cat, ci) {
+    var tab = el("button", { type: "button", role: "tab", id: "tab-" + cat.id, "aria-controls": "painel-" + cat.id, "data-aba": cat.id, class: "tab" },
+      '<span class="tab-nome">' + esc(cat.titulo || cat.marca) + '</span><span class="tab-qtd">' + (cat.itens || []).length + ' cores</span><span class="tab-sel pill js-tabcount" data-cat="' + cat.id + '" hidden>0</span>');
+    tabs.appendChild(tab);
+    var panel = el("div", { role: "tabpanel", id: "painel-" + cat.id, "aria-labelledby": "tab-" + cat.id, class: "cat-painel", tabindex: "0" });
+    if (cat.linha) panel.appendChild(el("p", { class: "cat-linha" }, '<span class="marca-tag marca-' + esc(cat.id) + '">' + esc(cat.marca) + '</span>' + esc(cat.linha)));
+    var ul = el("ul", { class: "grid-cores" });
+    (cat.itens || []).forEach(function (it, i) { ul.appendChild(card(ITENS[cat.id + ":" + it.id], i)); });
+    panel.appendChild(ul);
+    panels.appendChild(panel);
+  });
+  function card(it, i) {
+    var li = el("li", { class: "cor rv" + (it.imagem ? " tem-lata" : ""), "data-key": it.key, style: "--c:" + (it.hex || "#777") + ";--d:" + (i % 3) * 60 + "ms" });
+    var lata = it.imagem ? '<img class="cor-lata" src="' + esc(it.imagem) + '" alt="' + esc(it.imagemAlt || ("Lata " + it.marca)) + '" loading="lazy" decoding="async" width="154" height="201">' : "";
+    var linhas = it.linhas.length ? '<p class="cor-linhas">' + it.linhas.map(esc).join(" · ") + '</p>' : "";
     li.innerHTML =
-      '<div class="cor-swatch" aria-hidden="true"><span class="cor-check">' + ICON_CHECK + '</span></div>' +
+      '<div class="cor-swatch"><span class="marca-tag marca-' + esc(it.cat) + '">' + esc(it.marca) + '</span>' + lata + '<span class="cor-check">' + ICON_CHECK + '</span></div>' +
       '<div class="cor-body">' +
-        '<h3 class="cor-nome">' + esc(c.nome) + '</h3>' +
-        '<p class="cor-cod">' + esc(c.codigo) + '</p>' +
-        '<button type="button" class="add" data-key="' + key + '" aria-pressed="false">' +
+        '<h3 class="cor-nome">' + esc(it.nome) + '</h3>' +
+        (it.codigo ? '<p class="cor-cod">' + esc(codTxt(it)) + '</p>' : '<p class="cor-cod">' + esc(it.marca) + '</p>') +
+        linhas +
+        '<button type="button" class="add" data-key="' + it.key + '" aria-pressed="false">' +
           '<span class="t-add">' + ICON_PLUS + 'Adicionar à seleção</span>' +
           '<span class="t-sel">' + ICON_CHECK + 'Selecionado<span class="rm">Remover</span></span>' +
         '</button>' +
       '</div>';
     return li;
   }
-  function cardProduto(p, i) {
-    var key = "produto:" + p.id;
-    var li = el("li", { class: "cor prod rv", "data-key": key, style: "--d:" + (i % 3) * 70 + "ms" });
-    li.innerHTML =
-      '<div class="cor-swatch prod-img" aria-hidden="true">' + (p.imagem ? '<img src="' + esc(p.imagem) + '" alt="" loading="lazy" decoding="async">' : '') + '<span class="cor-check">' + ICON_CHECK + '</span></div>' +
-      '<div class="cor-body">' +
-        (p.marca ? '<p class="cor-cod">' + esc(p.marca) + '</p>' : '') +
-        '<h3 class="cor-nome">' + esc(p.nome) + '</h3>' +
-        (p.codigo ? '<p class="cor-cod">' + esc(p.codigo) + '</p>' : '') +
-        (p.descricao ? '<p class="prod-desc">' + esc(p.descricao) + '</p>' : '') +
-        '<button type="button" class="add" data-key="' + key + '" aria-pressed="false">' +
-          '<span class="t-add">' + ICON_PLUS + 'Adicionar à seleção</span>' +
-          '<span class="t-sel">' + ICON_CHECK + 'Selecionado<span class="rm">Remover</span></span>' +
-        '</button>' +
-      '</div>';
-    return li;
+  function setAba(id, focus) {
+    state.aba = id; persist();
+    $$(".tab").forEach(function (t) { var on = t.getAttribute("data-aba") === id; t.setAttribute("aria-selected", on ? "true" : "false"); t.tabIndex = on ? 0 : -1; if (on && focus) t.focus(); });
+    $$(".cat-painel").forEach(function (p) { p.hidden = p.id !== "painel-" + id; });
+    $$(".cat-painel:not([hidden]) .rv").forEach(function (r) { r.classList.add("in"); });
   }
-  var gridCores = $("#gridCores");
-  CORES.forEach(function (c, i) { gridCores.appendChild(cardCor(c, i)); });
-  if (PRODUTOS.length) {
-    $("#blocoProdutos").hidden = false;
-    var gp = $("#gridProdutos");
-    PRODUTOS.forEach(function (p, i) { gp.appendChild(cardProduto(p, i)); });
-  }
+  tabs.addEventListener("click", function (e) { var t = e.target.closest(".tab"); if (t) setAba(t.getAttribute("data-aba")); });
+  tabs.addEventListener("keydown", function (e) {
+    var list = $$(".tab"), i = list.indexOf(document.activeElement);
+    if (i < 0) return;
+    if (e.key === "ArrowRight" || e.key === "ArrowLeft") { e.preventDefault(); var n = (i + (e.key === "ArrowRight" ? 1 : -1) + list.length) % list.length; setAba(list[n].getAttribute("data-aba"), true); }
+  });
 
   /* ---------- render: obras ---------- */
   var gridObras = $("#gridObras");
   var PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>';
   if (OBRAS.length) {
     OBRAS.forEach(function (o, i) {
-      var meta = [o.local, o.tipo].filter(Boolean).map(esc).join(' · ');
+      var meta = [o.local, o.tipo].filter(Boolean).map(esc).join(" · ");
       var li = el("li", { class: "obra rv", style: "--d:" + (i % 3) * 80 + "ms" });
       var media = o.imagem ? '<img src="' + esc(o.imagem) + '" alt="' + esc(o.titulo || "Obra realizada pela Eliti Color") + '" loading="lazy" decoding="async">' : '<span class="obra-noimg"></span>';
-      if (o.video) {
-        li.innerHTML = '<button type="button" class="obra-media" data-video="' + esc(o.video) + '" data-poster="' + esc(o.imagem || "") + '" aria-label="Assistir vídeo' + (o.titulo ? ": " + esc(o.titulo) : "") + '">' + media + '<span class="obra-play">' + PLAY + '</span></button>';
-      } else {
-        li.innerHTML = '<div class="obra-media">' + media + '</div>';
-      }
+      li.innerHTML = o.video
+        ? '<button type="button" class="obra-media" data-video="' + esc(o.video) + '" data-poster="' + esc(o.imagem || "") + '" aria-label="Assistir vídeo' + (o.titulo ? ": " + esc(o.titulo) : "") + '">' + media + '<span class="obra-play">' + PLAY + '</span></button>'
+        : '<div class="obra-media">' + media + '</div>';
       if (o.titulo || meta) li.innerHTML += '<div class="obra-info">' + (o.titulo ? '<h3>' + esc(o.titulo) + '</h3>' : '') + (meta ? '<p>' + meta + '</p>' : '') + '</div>';
       gridObras.appendChild(li);
     });
   } else {
-    // Espaços reservados: NÃO são obras reais. Somem assim que houver itens em ELITI.obras.
+    // Espaços reservados: NÃO são obras reais. Somem quando houver itens em ELITI.obras.
     for (var k = 0; k < 6; k++) {
-      var ph = el("li", { class: "obra ph rv", style: "--d:" + (k % 3) * 80 + "ms", "aria-hidden": k > 0 ? "true" : "false" });
+      var ph = el("li", { class: "obra ph rv", style: "--d:" + (k % 3) * 80 + "ms" });
+      if (k > 0) ph.setAttribute("aria-hidden", "true");
       ph.innerHTML = '<div class="obra-media"><span class="ph-ic"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5.5-5.5L6 19"/></svg></span><span class="ph-tag">Espaço reservado</span><span class="ph-txt">Foto de obra em breve</span></div>';
       gridObras.appendChild(ph);
     }
     $("#obrasNota").hidden = false;
   }
 
-  /* ---------- modal de vídeo ---------- */
+  /* ---------- modal de vídeo das obras ---------- */
   var modal = $("#modal"), mvid = $("#modalVideo");
   document.addEventListener("click", function (e) {
     var b = e.target.closest && e.target.closest("[data-video]");
@@ -132,19 +133,19 @@
   /* ---------- atendentes ---------- */
   var atWrap = $("#selAtendentes");
   ATEND.forEach(function (a) {
-    var id = "at-" + a.id;
-    var lab = el("label", { class: "at", for: id });
-    lab.innerHTML = '<input type="radio" name="atendente" id="' + id + '" value="' + a.id + '"><span class="at-box"><span class="at-nome">' + esc(a.nome) + '</span><span class="at-tel">' + esc(a.telefone || "") + '</span></span>';
+    var lab = el("label", { class: "at", for: "at-" + a.id });
+    lab.innerHTML = '<input type="radio" name="atendente" id="at-' + a.id + '" value="' + a.id + '"><span class="at-box"><span class="at-nome">' + esc(a.nome) + '</span><span class="at-tel">' + esc(a.telefone || "") + '</span></span>';
     atWrap.appendChild(lab);
   });
   atWrap.addEventListener("change", function (e) { if (e.target.name === "atendente") { state.atendente = e.target.value; persist(); update(); } });
 
   /* ---------- mensagem e link do WhatsApp ---------- */
   function mensagem() {
-    var itens = state.itens.map(function (k) { return ITENS[k]; });
-    var soCores = itens.every(function (it) { return it.tipo === "cor"; });
-    var linhas = itens.map(function (it, i) { return (i + 1) + ". " + it.nome + (it.codigo ? " — " + it.codigo : ""); });
-    return (soCores ? MSG.inicioCores : MSG.inicioItens) + "\n\n" + linhas.join("\n") + "\n\n" + MSG.fim;
+    var linhas = state.itens.map(function (k, i) {
+      var it = ITENS[k];
+      return (i + 1) + ". " + it.marca + " — " + it.nome + (it.codigo ? " — Código " + it.codigo : "");
+    });
+    return MSG.inicio + "\n\n" + linhas.join("\n") + "\n\n" + MSG.fim;
   }
   function linkWhats() {
     var a = ATEND.filter(function (x) { return x.id === state.atendente; })[0] || ATEND[0];
@@ -152,51 +153,48 @@
   }
 
   /* ---------- seleção: atualizar interface ---------- */
-  var live = $("#live");
-  var ctas = $$(".js-orcamento");
+  var live = $("#live"), ctas = $$(".js-orcamento");
   function update() {
     var n = state.itens.length;
-    // cards
-    $$(".cor").forEach(function (card) {
-      var on = isSel(card.getAttribute("data-key"));
-      card.classList.toggle("is-sel", on);
-      var b = $(".add", card);
-      var nm = ITENS[card.getAttribute("data-key")].nome;
+    $$(".cor").forEach(function (c) {
+      var key = c.getAttribute("data-key"), on = isSel(key), it = ITENS[key];
+      c.classList.toggle("is-sel", on);
+      var b = $(".add", c);
       b.setAttribute("aria-pressed", on ? "true" : "false");
-      b.setAttribute("aria-label", on ? "Remover " + nm + " da seleção" : "Adicionar " + nm + " à seleção");
+      b.setAttribute("aria-label", (on ? "Remover " : "Adicionar ") + it.marca + " " + it.nome + (on ? " da seleção" : " à seleção"));
     });
-    // lista
     var list = $("#selLista"); list.innerHTML = "";
     state.itens.forEach(function (k) {
       var it = ITENS[k];
       var li = el("li", { class: "si" });
-      li.innerHTML = (it.hex ? '<span class="si-dot" style="--c:' + it.hex + '"></span>' : '<span class="si-dot prod"></span>') +
-        '<span class="si-txt"><strong>' + esc(it.nome) + '</strong><small>' + esc(it.codigo || "") + '</small></span>' +
-        '<button type="button" class="si-rm" data-rm="' + k + '" aria-label="Remover ' + esc(it.nome) + '">' + ICON_X + '</button>';
+      li.innerHTML = '<span class="si-dot" style="--c:' + (it.hex || "#888") + '"></span>' +
+        '<span class="si-txt"><small class="si-marca">' + esc(it.marca) + '</small><strong>' + esc(it.nome) + '</strong>' + (it.codigo ? '<small>Código ' + esc(it.codigo) + '</small>' : '') + '</span>' +
+        '<button type="button" class="si-rm" data-rm="' + k + '" aria-label="Remover ' + esc(it.marca + " " + it.nome) + '">' + ICON_X + '</button>';
       list.appendChild(li);
     });
     $("#selVazio").hidden = n > 0;
     $("#selLimpar").hidden = n === 0;
-    var plural = n === 1 ? "1 cor selecionada" : n + " cores selecionadas";
-    if (state.itens.some(function (k) { return ITENS[k].tipo !== "cor"; })) plural = n === 1 ? "1 item selecionado" : n + " itens selecionados";
+    var txt = n === 0 ? "Nenhuma cor ainda" : (n === 1 ? "1 cor selecionada" : n + " cores selecionadas");
     $$(".js-count").forEach(function (e) { e.textContent = n; });
-    $$(".js-count-txt").forEach(function (e) { e.textContent = n ? plural : "Nenhuma cor ainda"; });
-    $$(".js-bar-sub").forEach(function (e) { e.textContent = n ? "Ver seleção" : "Escolha uma cor no catálogo"; });
-    $("#selBarDots").innerHTML = state.itens.slice(0, 6).map(function (k) { var it = ITENS[k]; return '<i style="--c:' + (it.hex || "#888") + '"></i>'; }).join("");
-    // atendente
+    $$(".js-count-txt").forEach(function (e) { e.textContent = txt; });
+    $$(".js-bar-sub").forEach(function (e) { e.textContent = n ? "Ver seleção" : "Selecione uma ou mais cores para pedir orçamento"; });
+    $$(".js-tabcount").forEach(function (e) {
+      var c = state.itens.filter(function (k) { return ITENS[k].cat === e.getAttribute("data-cat"); }).length;
+      e.textContent = c; e.hidden = c === 0;
+    });
+    $("#selBarDots").innerHTML = state.itens.slice(0, 6).map(function (k) { return '<i style="--c:' + (ITENS[k].hex || "#888") + '"></i>'; }).join("");
     $$('input[name="atendente"]').forEach(function (r) { r.checked = r.value === state.atendente; });
     var at = ATEND.filter(function (x) { return x.id === state.atendente; })[0];
     $$(".js-atendente").forEach(function (e) { e.textContent = at ? at.nome : ""; });
-    // botão principal
     ctas.forEach(function (a) {
-      if (n) { a.href = linkWhats(); a.removeAttribute("aria-disabled"); a.classList.remove("off"); a.tabIndex = 0; }
+      if (n) { a.href = linkWhats(); a.removeAttribute("aria-disabled"); a.classList.remove("off"); }
       else { a.removeAttribute("href"); a.setAttribute("aria-disabled", "true"); a.classList.add("off"); }
     });
     $$(".js-hint").forEach(function (e) { e.hidden = n > 0; });
     document.documentElement.classList.toggle("has-sel", n > 0);
   }
   function toggle(k) {
-    var i = state.itens.indexOf(k), nome = ITENS[k].nome;
+    var i = state.itens.indexOf(k), it = ITENS[k], nome = it.marca + " " + it.nome;
     if (i === -1) { state.itens.push(k); announce(nome + " adicionada à seleção. " + state.itens.length + " no total."); pulse(); }
     else { state.itens.splice(i, 1); announce(nome + " removida da seleção."); }
     persist(); update();
@@ -208,29 +206,24 @@
     var add = e.target.closest && e.target.closest(".add");
     if (add) { toggle(add.getAttribute("data-key")); return; }
     var rm = e.target.closest && e.target.closest("[data-rm]");
-    if (rm) { toggle(rm.getAttribute("data-rm")); return; }
+    if (rm) toggle(rm.getAttribute("data-rm"));
   });
   $("#selLimpar").addEventListener("click", function () { state.itens = []; persist(); update(); announce("Seleção limpa."); });
   ctas.forEach(function (a) { a.addEventListener("click", function (e) { if (!state.itens.length) { e.preventDefault(); var g = $("#cores"); if (g) g.scrollIntoView({ behavior: reduce ? "auto" : "smooth" }); } }); });
 
-  /* ---------- painel no celular (abre/fecha) ---------- */
+  /* ---------- painel no celular ---------- */
   var sel = $("#selecao"), barBtn = $("#selToggle");
-  function setOpen(o) { sel.classList.toggle("open", o); barBtn.setAttribute("aria-expanded", o ? "true" : "false"); document.documentElement.classList.toggle("sheet-open", o); }
+  function setOpen(o) { sel.classList.toggle("open", o); barBtn.setAttribute("aria-expanded", o ? "true" : "false"); }
   barBtn.addEventListener("click", function () { setOpen(!sel.classList.contains("open")); });
   $("#selFechar").addEventListener("click", function () { setOpen(false); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape" && sel.classList.contains("open")) setOpen(false); });
   var topSel = $(".topbar-sel");
-  if (topSel) topSel.addEventListener("click", function (e) {
-    if (window.innerWidth < 1024) { e.preventDefault(); setOpen(true); }
-  });
+  if (topSel) topSel.addEventListener("click", function (e) { if (window.innerWidth < 1024) { e.preventDefault(); setOpen(true); } });
 
-  /* ---------- topo fixo e barra inferior aparecem depois do hero ---------- */
+  /* ---------- topo fixo e barra inferior depois do hero ---------- */
   var hero = $("#inicio");
   if ("IntersectionObserver" in window && hero) {
-    new IntersectionObserver(function (ents) {
-      var past = !ents[0].isIntersecting;
-      document.documentElement.classList.toggle("past-hero", past);
-    }, { threshold: 0, rootMargin: "-40% 0px 0px 0px" }).observe(hero);
+    new IntersectionObserver(function (ents) { document.documentElement.classList.toggle("past-hero", !ents[0].isIntersecting); }, { rootMargin: "-40% 0px 0px 0px" }).observe(hero);
   } else document.documentElement.classList.add("past-hero");
 
   /* ---------- revelar ao rolar ---------- */
@@ -246,8 +239,57 @@
   var v = $(".media video");
   if (v) { if (reduce) { v.removeAttribute("autoplay"); v.pause(); } else { v.muted = true; var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } }
 
-  update();
+  /* =====================================================================
+     VÍDEO DA LATA CONTROLADO PELO SCROLL
+     Quadros do vídeo em assets/lata/d (computador) e assets/lata/m (celular).
+     Rolar para baixo avança o vídeo; subir recua. Com movimento reduzido,
+     mostra só a imagem estática (assets/lata/poster.webp).
+     ===================================================================== */
+  (function lata() {
+    var sec = $("#lata"), cv = $("#lataCanvas"), copy = $("#lataCopy");
+    if (!sec || !cv || !cv.getContext) return;
+    if (reduce) { sec.classList.add("static"); return; }
+    var small = Math.min(innerWidth, innerHeight) < 700;
+    var N = small ? 40 : 60, dir = "assets/lata/" + (small ? "m" : "d") + "/";
+    var frames = new Array(N), started = false, ctx = cv.getContext("2d"), W = 0, H = 0, dpr = 1, ticking = false, cur = 0;
+    function pad(n) { return ("00" + n).slice(-3); }
+    function load() {
+      if (started) return; started = true;
+      for (var i = 0; i < N; i++) (function (i) {
+        var im = new Image(); im.decoding = "async";
+        im.onload = function () { frames[i] = im; if (i === 0) { sec.classList.add("ready"); req(); } };
+        im.src = dir + pad(i) + ".webp";
+      })(i);
+    }
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (e) { if (e[0].isIntersecting) load(); }, { rootMargin: "1200px 0px" }).observe(sec);
+    } else load();
+    function size() { dpr = Math.min(devicePixelRatio || 1, 1.5); W = cv.clientWidth; H = cv.clientHeight; cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); req(); }
+    function req() { if (!ticking) { ticking = true; requestAnimationFrame(draw); } }
+    function progress() { var r = sec.getBoundingClientRect(), total = sec.offsetHeight - innerHeight; return total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 0; }
+    function draw() {
+      ticking = false; if (!W) size();
+      var p = progress();
+      // suaviza a troca de quadros (acompanha o scroll sem saltos)
+      var target = p * (N - 1);
+      cur += (target - cur) * 0.35;
+      if (Math.abs(target - cur) > 0.05) req();
+      var fi = Math.round(cur), im = frames[fi];
+      if (!im) for (var s = fi; s >= 0; s--) if (frames[s]) { im = frames[s]; break; }
+      copy.style.setProperty("--p", Math.min(1, Math.max(0, (p - 0.45) / 0.4)).toFixed(3));
+      if (!im) return;
+      var iw = im.naturalWidth, ih = im.naturalHeight, sc = Math.max(W / iw, H / ih), dw = iw * sc, dh = ih * sc;
+      var ax = W < 700 ? 0.60 : 0.5;                       // no celular, centraliza no jato de tinta
+      var dx = Math.min(0, Math.max(W - dw, W / 2 - dw * ax)), dy = (H - dh) / 2;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.drawImage(im, dx, dy, dw, dh);
+    }
+    addEventListener("scroll", req, { passive: true });
+    addEventListener("resize", size);
+    size();
+  })();
 
-  // exposto só para testes/manutenção
-  window.__eliti = { state: state, mensagem: mensagem, link: linkWhats };
+  setAba(state.aba);
+  update();
+  window.__eliti = { state: state, mensagem: mensagem, link: linkWhats, setAba: setAba };
 })();

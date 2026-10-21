@@ -64,27 +64,38 @@
   </div>
 </section>
 
+<!-- ============ VÍDEO DA LATA (controlado pelo scroll) ============ -->
+<section class="lata" id="lata" aria-label="Lata de tinta despejando tinta">
+  <div class="lata-stage">
+    <img class="lata-poster" src="assets/lata/poster.webp" alt="" width="1280" height="720" loading="lazy" decoding="async">
+    <canvas id="lataCanvas" aria-hidden="true"></canvas>
+    <div class="lata-fade" aria-hidden="true"></div>
+    <div class="lata-copy" id="lataCopy">
+      <span class="eyebrow">Catálogos Coral e Mercure</span>
+      <p class="lata-titulo">Escolha suas cores<br>e peça seu orçamento</p>
+      <a class="btn btn-gold btn-sm" href="#cores">Ver catálogo
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
+    </div>
+  </div>
+</section>
+
 <!-- ============ 2. CATÁLOGO DE CORES + 3. RESUMO DA SELEÇÃO ============ -->
 <section class="section catalogo" id="cores" aria-labelledby="t-cores">
   <div class="wrap">
     <header class="sec-head rv">
-      <span class="eyebrow">Coral · disponível na Eliti Color</span>
+      <span class="eyebrow">Coral · Mercure</span>
       <h2 class="h2" id="t-cores">Catálogo de cores</h2>
-      <p class="lead">Adicione as cores que você quer à sua seleção e envie o pedido de orçamento ao atendente pelo WhatsApp.</p>
+      <p class="lead">Escolha o catálogo, adicione as cores à sua seleção e envie o pedido de orçamento ao atendente pelo WhatsApp.</p>
     </header>
 
     <div class="cat-layout">
       <div class="cat-main">
-        <ul class="grid-cores" id="gridCores"></ul>
-        <p class="note rv">
+        <div class="tabs" id="catTabs" role="tablist" aria-label="Catálogos"></div>
+        <div id="catPaineis"></div>
+        <p class="note">
           <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
-          As cores exibidas são uma referência e podem variar conforme a tela do seu aparelho. Confira a amostra na loja antes de comprar.
+          As cores exibidas na tela são aproximadas. Confirme a tonalidade na loja.
         </p>
-
-        <div id="blocoProdutos" class="bloco-produtos" hidden>
-          <h3 class="h3">Produtos</h3>
-          <ul class="grid-cores" id="gridProdutos"></ul>
-        </div>
 
         <noscript><p class="note">Para montar sua seleção, ative o JavaScript ou fale direto com a loja na seção de contato abaixo.</p></noscript>
       </div>
@@ -93,7 +104,7 @@
       <aside class="sel" id="selecao" aria-labelledby="t-sel">
         <button type="button" class="sel-bar" id="selToggle" aria-expanded="false" aria-controls="selCorpo">
           <span class="sel-bar-dots" id="selBarDots" aria-hidden="true"></span>
-          <span class="sel-bar-txt"><strong class="js-count-txt">Nenhuma cor ainda</strong><small class="js-bar-sub">Ver seleção</small></span>
+          <span class="sel-bar-txt"><strong class="js-count-txt">Nenhuma cor ainda</strong><small class="js-bar-sub">Escolha no catálogo</small></span>
           <svg class="chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg>
         </button>
         <span id="selBar" class="sel-bar-pulse" aria-hidden="true"></span>
@@ -121,7 +132,7 @@
             <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3c-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4.1 1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2Z"/></svg>
             <span class="lbl-full">Pedir orçamento pelo WhatsApp</span><span class="lbl-short" aria-hidden="true">Orçamento</span>
           </a>
-          <p class="sel-hint js-hint">Escolha pelo menos uma cor para pedir o orçamento.</p>
+          <p class="sel-hint js-hint">Selecione uma ou mais cores para pedir orçamento</p>
           <p class="sel-via" aria-live="off">Atendimento com <strong class="js-atendente">Tiago</strong></p>
         </div>
       </aside>
@@ -182,7 +193,7 @@
 
     <footer class="rodape">
       <picture><source srcset="assets/logo-eliticolor.webp" type="image/webp"><img src="assets/logo-eliticolor.png" width="1200" height="234" alt="Eliti Color — Centro de Pinturas" loading="lazy"></picture>
-      <p>Revendedor Coral. As cores exibidas na tela são aproximadas; confira a amostra na loja antes de comprar.</p>
+      <p>As cores exibidas na tela são aproximadas. Confirme a tonalidade na loja.</p>
     </footer>
   </div>
 </section>
