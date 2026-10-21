@@ -333,6 +333,15 @@
     window.addEventListener("resize", medir);
     if (mq.addEventListener) mq.addEventListener("change", medir);
     window.addEventListener("load", medir);
+    // teclado: ao focar um card fora da tela, rola até ele aparecer no trilho
+    trilho.addEventListener("focusin", function (e) {
+      if (!document.documentElement.classList.contains("h-on") || !dist) return;
+      var card = e.target.closest(".cor"); if (!card) return;
+      var x = Math.min(dist, Math.max(0, card.offsetLeft - (palco.clientWidth - card.offsetWidth) / 2));
+      var topo = parseFloat(getComputedStyle(palco).top) || 0;
+      var y = trilho.getBoundingClientRect().top + window.scrollY - topo + x;
+      if (Math.abs(x - alvo) > 4) window.scrollTo({ top: y, behavior: mq.matches ? "auto" : "smooth" });
+    });
     window.__trilho = medir;
     medir();
   })();
