@@ -438,4 +438,33 @@
       io.observe(quadro);
     } else iniciar();
   })();
+
+  /* ---------- logo animada (toca uma vez e para na logo montada) ---------- */
+  (function () {
+    var box = $("#logoAnim"); if (!box || reduce) return;
+    var img = $(".logo-anim-img", box);
+    var ua = navigator.userAgent;
+    var safari = /^((?!chrome|chromium|crios|fxios|android|edg).)*safari/i.test(ua);
+    if (safari) {
+      // Safari não mostra transparência em WebM: usa WebP animado (toca uma vez)
+      var anim = new Image();
+      anim.onload = function () { img.src = anim.src; };
+      anim.src = "assets/logo-animada.webp";
+      return;
+    }
+    var v = document.createElement("video");
+    v.muted = true; v.defaultMuted = true; v.playsInline = true; v.setAttribute("playsinline", ""); v.setAttribute("muted", "");
+    v.preload = "auto"; v.setAttribute("aria-hidden", "true");
+    v.src = "assets/logo-animada.webm";
+    v.addEventListener("playing", function () { box.classList.add("tocando"); });
+    v.addEventListener("error", function () { box.classList.remove("tocando"); });
+    box.appendChild(v);
+    var p = v.play(); if (p && p.catch) p.catch(function () { box.classList.remove("tocando"); });
+    // passar o mouse na logo toca de novo
+    var ultima = 0;
+    box.addEventListener("mouseenter", function () {
+      if (!box.classList.contains("tocando") || !v.ended || Date.now() - ultima < 1500) return;
+      ultima = Date.now(); v.currentTime = 0; v.play();
+    });
+  })();
 })();
