@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Eliti Color — Centro de Pinturas</title>
-<meta name="description" content="Eliti Color — Centro de Pinturas. Cores Coral e Mercure: monte seu leque e peça o orçamento pelo WhatsApp. R. Minas Gerais, 894 - Centro.">
-<meta name="theme-color" content="#08113a">
+<meta name="description" content="Eliti Color — Centro de Pinturas. Catálogo de cores Coral: monte sua seleção e peça seu orçamento pelo WhatsApp. R. Minas Gerais, 894 - Centro.">
+<meta name="theme-color" content="#060c2a">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:title" content="Eliti Color — Centro de Pinturas">
-<meta property="og:description" content="Cores Coral e Mercure: monte seu leque e peça o orçamento pelo WhatsApp.">
+<meta property="og:description" content="Catálogo de cores Coral: monte sua seleção e peça seu orçamento pelo WhatsApp.">
 <meta property="og:image" content="https://eliti-color.vercel.app/assets/eliticolor-poster.jpg">
 <meta property="og:url" content="https://eliti-color.vercel.app/">
 <link rel="canonical" href="https://eliti-color.vercel.app/">
@@ -18,139 +18,186 @@
 <link rel="preload" as="image" href="assets/logo-eliticolor.webp" type="image/webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/estilo.css">
 </head>
 <body>
 
-<!-- ============ BARRA SUPERIOR ============ -->
-<header class="topo">
-  <a href="#inicio" class="topo-logo" aria-label="Eliti Color — início">
+<!-- ============ TOPO FIXO (aparece depois do hero) ============ -->
+<header class="topbar" aria-label="Navegação">
+  <a href="#inicio" class="topbar-logo" aria-label="Eliti Color — voltar ao início">
     <picture><source srcset="assets/logo-eliticolor.webp" type="image/webp"><img src="assets/logo-eliticolor.png" width="1200" height="234" alt="Eliti Color"></picture>
   </a>
-  <nav class="topo-nav" aria-label="Seções">
-    <a href="#coral">Coral</a>
-    <a href="#mercure">Mercure</a>
+  <nav class="topbar-nav">
+    <a href="#cores">Cores</a>
     <a href="#obras">Obras</a>
     <a href="#contato">Contato</a>
   </nav>
-  <a href="#contato" class="topo-acao">Falar com a loja</a>
+  <a href="#selecao" class="topbar-sel">Seleção <span class="pill js-count">0</span></a>
 </header>
 
 <main>
-<!-- ============ 1. ABERTURA ============ -->
-<section class="hero" id="inicio" aria-labelledby="t-hero">
-  <div class="hero-texto">
-    <h1 id="t-hero" class="hero-logo">
-      <picture><source srcset="assets/logo-eliticolor.webp" type="image/webp"><img src="assets/logo-eliticolor.png" width="1200" height="234" alt="Eliti Color — Centro de Pinturas"></picture>
-    </h1>
-    <p class="hero-frase">Tudo o que você precisa em tintas imobiliárias e industriais.</p>
-    <p class="hero-apoio">Escolha cores Coral e Mercure, monte o seu leque e peça o orçamento direto pelo WhatsApp.</p>
-    <a class="bt bt-ouro" href="#coral"><span class="rebite" aria-hidden="true"></span><span>Montar meu leque</span><svg class="seta" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-  </div>
-  <!-- a lâmina do leque, em tamanho gigante, guarda o vídeo da loja -->
-  <div class="hero-lamina" aria-hidden="true">
+<!-- ============ 1. HERO ============ -->
+<section class="stage" id="inicio">
+  <div class="media" aria-hidden="true">
     <video autoplay muted loop playsinline preload="metadata" poster="assets/eliticolor-poster.jpg" disablepictureinpicture>
       <source src="assets/eliticolor-bg.webm" type="video/webm">
       <source src="assets/eliticolor-bg.mp4" type="video/mp4">
     </video>
-    <span class="furo"></span>
+  </div>
+  <div class="shade"></div>
+
+  <div class="hero">
+    <h1 class="hero-logo">
+      <picture>
+        <source srcset="assets/logo-eliticolor.webp" type="image/webp">
+        <img src="assets/logo-eliticolor.png" width="1200" height="234" alt="Eliti Color — Centro de Pinturas">
+      </picture>
+    </h1>
+    <p class="tagline"><span class="t1">Tudo o que você precisa em</span><span class="t2">tintas <em>imobiliárias</em><br> e <em>industriais</em></span></p>
+    <p class="hero-lead">Escolha suas cores no catálogo e peça o orçamento direto pelo WhatsApp.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-gold" href="#cores">Ver catálogo de cores
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
+      <a class="btn btn-ghost" href="#contato">Falar com um atendente</a>
+    </div>
   </div>
 </section>
 
 <!-- ============ VÍDEO DA LATA (controlado pelo scroll) ============ -->
-<section class="lata" id="lata" aria-label="Lata de tinta sendo despejada">
-  <div class="lata-palco">
+<section class="lata" id="lata" aria-label="Lata de tinta despejando tinta">
+  <div class="lata-stage">
     <img class="lata-poster" src="assets/lata/poster.webp" alt="" width="1280" height="720" loading="lazy" decoding="async">
     <canvas id="lataCanvas" aria-hidden="true"></canvas>
-    <div class="lata-scrim" aria-hidden="true"></div>
-    <div class="lata-texto" id="lataCopy">
-      <p class="lata-frase">Escolha suas cores e peça o orçamento.</p>
-      <p class="lata-apoio">Role para ver as coleções Coral e Mercure.</p>
+    <div class="lata-fade" aria-hidden="true"></div>
+    <div class="lata-copy" id="lataCopy">
+      <span class="eyebrow">Catálogos Coral e Mercure</span>
+      <p class="lata-titulo">Escolha suas cores<br>e peça seu orçamento</p>
+      <a class="btn btn-gold btn-sm" href="#cores">Ver catálogo
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
     </div>
   </div>
 </section>
 
-<!-- ============ 2. CATÁLOGOS (showroom por marca) ============ -->
-<div id="showrooms"></div>
-<p class="aviso-cor" id="cores">As cores exibidas na tela são aproximadas. Confirme a tonalidade na loja.</p>
-<noscript><p class="aviso-cor">Para montar seu leque, ative o JavaScript ou fale com a loja na seção de contato abaixo.</p></noscript>
+<!-- ============ 2. CATÁLOGO DE CORES + 3. RESUMO DA SELEÇÃO ============ -->
+<section class="section catalogo" id="cores" aria-labelledby="t-cores">
+  <div class="wrap">
+    <header class="sec-head rv">
+      <span class="eyebrow">Coral · Mercure</span>
+      <h2 class="h2" id="t-cores">Catálogo de cores</h2>
+      <p class="lead">Escolha o catálogo, adicione as cores à sua seleção e envie o pedido de orçamento ao atendente pelo WhatsApp.</p>
+    </header>
+
+    <div class="cat-layout">
+      <div class="cat-main">
+        <div class="tabs" id="catTabs" role="tablist" aria-label="Catálogos"></div>
+        <div id="catPaineis"></div>
+        <p class="note">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+          As cores exibidas na tela são aproximadas. Confirme a tonalidade na loja.
+        </p>
+
+        <noscript><p class="note">Para montar sua seleção, ative o JavaScript ou fale direto com a loja na seção de contato abaixo.</p></noscript>
+      </div>
+
+      <!-- Resumo da seleção: painel lateral (computador) / barra inferior (celular) -->
+      <aside class="sel" id="selecao" aria-labelledby="t-sel">
+        <button type="button" class="sel-bar" id="selToggle" aria-expanded="false" aria-controls="selCorpo">
+          <span class="sel-bar-dots" id="selBarDots" aria-hidden="true"></span>
+          <span class="sel-bar-txt"><strong class="js-count-txt">Nenhuma cor ainda</strong><small class="js-bar-sub">Escolha no catálogo</small></span>
+          <svg class="chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg>
+        </button>
+        <span id="selBar" class="sel-bar-pulse" aria-hidden="true"></span>
+
+        <div class="sel-corpo" id="selCorpo">
+          <div class="sel-head">
+            <h2 class="sel-title" id="t-sel">Sua seleção <span class="pill js-count">0</span></h2>
+            <button type="button" class="sel-fechar" id="selFechar" aria-label="Fechar seleção">
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            </button>
+          </div>
+
+          <p class="sel-vazio" id="selVazio">Nenhuma cor escolhida ainda. Toque em <strong>“Adicionar à seleção”</strong> nas cores do catálogo.</p>
+          <ul class="sel-lista" id="selLista"></ul>
+          <button type="button" class="sel-limpar" id="selLimpar" hidden>Limpar seleção</button>
+
+          <fieldset class="sel-at">
+            <legend>Enviar para</legend>
+            <div class="at-grid" id="selAtendentes"></div>
+          </fieldset>
+        </div>
+
+        <div class="sel-acao">
+          <a class="btn btn-wa js-orcamento off" target="_blank" rel="noopener" aria-disabled="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3c-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4.1 1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2Z"/></svg>
+            <span class="lbl-full">Pedir orçamento pelo WhatsApp</span><span class="lbl-short" aria-hidden="true">Orçamento</span>
+          </a>
+          <p class="sel-hint js-hint">Selecione uma ou mais cores para pedir orçamento</p>
+          <p class="sel-via" aria-live="off">Atendimento com <strong class="js-atendente">Tiago</strong></p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
 
 <!-- ============ 4. OBRAS REALIZADAS ============ -->
-<section class="obras" id="obras" aria-labelledby="t-obras">
-  <div class="obras-cab">
-    <h2 class="titulo" id="t-obras">Obras realizadas</h2>
-    <p class="obras-nota" id="obrasNota" hidden>Este espaço vai mostrar fotos e vídeos de obras feitas com a Eliti Color.</p>
+<section class="section obras" id="obras" aria-labelledby="t-obras">
+  <div class="wrap">
+    <header class="sec-head rv">
+      <span class="eyebrow">Inspirações</span>
+      <h2 class="h2" id="t-obras">Obras realizadas</h2>
+      <p class="lead" id="obrasNota" hidden>Em breve, fotos e vídeos de obras feitas com a Eliti Color.</p>
+    </header>
+    <ul class="grid-obras" id="gridObras"></ul>
   </div>
-  <ul class="obras-grade" id="gridObras"></ul>
 </section>
 
-<!-- ============ 5. CONTATO ============ -->
-<section class="contato" id="contato" aria-labelledby="t-contato">
-  <h2 class="titulo" id="t-contato">Peça seu orçamento</h2>
-  <p class="contato-apoio">Mande o seu leque pelo botão de orçamento ou fale direto com um atendente.</p>
-  <ul class="pessoas">
-    <li class="pessoa">
-      <span class="pessoa-nome">Tiago</span>
-      <a class="pessoa-num" href="tel:+5544991113969" aria-label="Ligar para Tiago: (44) 99111-3969">(44) 99111-3969</a>
-      <a class="bt bt-marinho" href="https://wa.me/5544991113969" target="_blank" rel="noopener" aria-label="Conversar com Tiago no WhatsApp"><span class="rebite" aria-hidden="true"></span><span>WhatsApp do Tiago</span><svg class="seta" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-    </li>
-    <li class="pessoa">
-      <span class="pessoa-nome">Eliel</span>
-      <a class="pessoa-num" href="tel:+5544998130641" aria-label="Ligar para Eliel: (44) 99813-0641">(44) 99813-0641</a>
-      <a class="bt bt-marinho" href="https://wa.me/5544998130641" target="_blank" rel="noopener" aria-label="Conversar com Eliel no WhatsApp"><span class="rebite" aria-hidden="true"></span><span>WhatsApp do Eliel</span><svg class="seta" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-    </li>
-  </ul>
-  <address class="endereco">
-    <a href="https://www.google.com/maps/search/?api=1&amp;query=Rua+Minas+Gerais%2C+894%2C+Centro" target="_blank" rel="noopener">
-      <span class="endereco-rua">R. Minas Gerais, 894 - Centro</span>
-      <span class="endereco-link">Ver no mapa<svg class="seta" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-    </a>
-  </address>
+<!-- ============ 5. CONTATO / ORÇAMENTO ============ -->
+<section class="section final" id="contato" aria-labelledby="t-contato">
+  <div class="wrap final-wrap">
+    <header class="sec-head rv">
+      <span class="eyebrow">Atendimento</span>
+      <h2 class="h2" id="t-contato">Peça seu <em>orçamento</em></h2>
+      <p class="lead">Monte sua seleção de cores ou fale direto com um atendente.</p>
+      <a class="btn btn-gold btn-sm" href="#cores">Montar minha seleção</a>
+    </header>
+
+    <ul class="contacts rv">
+      <li class="contact">
+        <span class="name">Tiago</span>
+        <a class="num" href="tel:+5544991113969" aria-label="Ligar para Tiago: (44) 99111-3969">(44) 99111-3969</a>
+        <a class="wa" href="https://wa.me/5544991113969" target="_blank" rel="noopener" aria-label="Conversar com Tiago no WhatsApp">
+          <span class="seal"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3c-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4.1 1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2Z"/></svg></span>
+          <span class="label"><small>WhatsApp</small>Conversar com Tiago</span>
+          <span class="arrow"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+      </li>
+      <li class="contact">
+        <span class="name">Eliel</span>
+        <a class="num" href="tel:+5544998130641" aria-label="Ligar para Eliel: (44) 99813-0641">(44) 99813-0641</a>
+        <a class="wa" href="https://wa.me/5544998130641" target="_blank" rel="noopener" aria-label="Conversar com Eliel no WhatsApp">
+          <span class="seal"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3c-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4.1 1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2Z"/></svg></span>
+          <span class="label"><small>WhatsApp</small>Conversar com Eliel</span>
+          <span class="arrow"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+      </li>
+    </ul>
+
+    <address class="address rv">
+      <a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Rua+Minas+Gerais%2C+894%2C+Centro" target="_blank" rel="noopener" aria-label="Abrir endereço no Google Maps: R. Minas Gerais, 894 - Centro">
+        <span class="seal"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.1 7-11.5A7 7 0 0 0 5 9.5C5 14.9 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
+        <span class="label"><small>Como chegar</small><strong>R. Minas Gerais, 894</strong><span class="sub">Centro · Ver no mapa</span></span>
+        <span class="arrow"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </address>
+
+    <footer class="rodape">
+      <picture><source srcset="assets/logo-eliticolor.webp" type="image/webp"><img src="assets/logo-eliticolor.png" width="1200" height="234" alt="Eliti Color — Centro de Pinturas" loading="lazy"></picture>
+      <p>As cores exibidas na tela são aproximadas. Confirme a tonalidade na loja.</p>
+    </footer>
+  </div>
 </section>
 </main>
-
-<footer class="rodape">
-  <picture><source srcset="assets/logo-eliticolor.webp" type="image/webp"><img src="assets/logo-eliticolor.png" width="1200" height="234" alt="Eliti Color — Centro de Pinturas" loading="lazy"></picture>
-  <p>As cores exibidas na tela são aproximadas. Confirme a tonalidade na loja.</p>
-</footer>
-
-<!-- ============ 3. SEU LEQUE (resumo da seleção) ============ -->
-<aside class="leque" id="selecao" aria-labelledby="t-leque">
-  <button type="button" class="leque-barra" id="selToggle" aria-expanded="false" aria-controls="lequeCorpo">
-    <span class="leque-mini" id="selBarDots" aria-hidden="true"></span>
-    <span class="leque-resumo"><strong class="js-count-txt">Seu leque está vazio</strong><small class="js-bar-sub">Selecione uma ou mais cores para pedir orçamento</small></span>
-    <svg class="chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg>
-  </button>
-  <span id="selBar" class="leque-pulso" aria-hidden="true"></span>
-
-  <div class="leque-corpo" id="lequeCorpo">
-    <div class="leque-cab">
-      <h2 id="t-leque">Seu leque <span class="conta js-count">0</span></h2>
-      <button type="button" class="leque-fechar" id="selFechar" aria-label="Fechar">
-        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
-      </button>
-    </div>
-    <p class="leque-vazio" id="selVazio">Nenhuma cor ainda. Toque em “Adicionar à seleção” nas coleções.</p>
-    <ul class="leque-lista" id="selLista"></ul>
-    <button type="button" class="leque-limpar" id="selLimpar" hidden>Limpar seleção</button>
-    <fieldset class="leque-at">
-      <legend>Enviar para</legend>
-      <div class="at-grade" id="selAtendentes"></div>
-    </fieldset>
-  </div>
-
-  <div class="leque-acao">
-    <a class="bt bt-wa js-orcamento off" target="_blank" rel="noopener" aria-disabled="true">
-      <span class="rebite" aria-hidden="true"></span>
-      <svg class="wa-ic" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3c-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4.1 1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2Z"/></svg>
-      <span class="lbl-full">Pedir orçamento pelo WhatsApp</span><span class="lbl-short" aria-hidden="true">Orçamento</span>
-      <svg class="seta" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-    </a>
-    <p class="leque-dica js-hint">Selecione uma ou mais cores para pedir orçamento</p>
-    <p class="leque-via">Atendimento com <strong class="js-atendente">Tiago</strong></p>
-  </div>
-</aside>
 
 <!-- Modal de vídeo das obras (sem som automático) -->
 <dialog class="modal" id="modal" aria-label="Vídeo da obra">
