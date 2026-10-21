@@ -368,20 +368,6 @@ ul{list-style:none}
   .js .rv.in{opacity:1;transform:none}
 }
 
-/* ---------- catálogo: cards passando na horizontal conforme a rolagem ---------- */
-.trilho-barra{display:none}
-.h-on .trilho{position:relative}
-.h-on .trilho-palco{position:sticky;top:var(--top);height:calc(100vh - var(--top));height:calc(100svh - var(--top));display:flex;flex-direction:column;justify-content:center;overflow:hidden;padding-bottom:84px}
-.h-on .grid-cores{display:flex;flex-wrap:nowrap;gap:14px;width:max-content;will-change:transform;transform:translate3d(calc(var(--x,0) * -1px),0,0)}
-.h-on .grid-cores > .cor{flex:0 0 clamp(210px,64vw,250px)}
-.h-on .trilho-barra{display:block;position:relative;height:3px;margin-top:22px;border-radius:3px;background:var(--hair);overflow:hidden}
-.h-on .trilho-barra i{position:absolute;inset:0;background:var(--gold);transform-origin:0 50%;transform:scaleX(var(--pr,0))}
-@media (min-width:1024px){
-  .h-on .trilho-palco{padding-bottom:0}
-  .h-on .grid-cores{gap:18px}
-  .h-on .grid-cores > .cor{flex-basis:300px}
-}
-
 /* ---------- acabamento do navegador ---------- */
 ::selection{background:var(--gold);color:var(--navy-deep)}
 html{scrollbar-color:rgba(255,255,255,.28) var(--navy-deep);caret-color:var(--gold)}
