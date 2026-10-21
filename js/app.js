@@ -59,8 +59,14 @@
     panel.appendChild(ul);
     panels.appendChild(panel);
   });
+  // cor clara pede texto escuro no botão aceso
+  function clara(hex) {
+    var h = String(hex || "").replace("#", ""); if (h.length !== 6) return false;
+    var r = parseInt(h.substr(0, 2), 16) / 255, g = parseInt(h.substr(2, 2), 16) / 255, b = parseInt(h.substr(4, 2), 16) / 255;
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b > 0.55;
+  }
   function card(it, i) {
-    var li = el("li", { class: "cor rv" + (it.imagem ? " tem-lata" : ""), "data-key": it.key, style: "--c:" + (it.hex || "#777") + ";--d:" + (i % 3) * 60 + "ms" });
+    var li = el("li", { class: "cor rv" + (it.imagem ? " tem-lata" : "") + (clara(it.hex) ? " cor-clara" : ""), "data-key": it.key, style: "--c:" + (it.hex || "#777") + ";--d:" + (i % 3) * 60 + "ms" });
     var lata = it.imagem ? '<img class="cor-lata" src="' + esc(it.imagem) + '" alt="' + esc(it.imagemAlt || ("Lata " + it.marca)) + '" loading="lazy" decoding="async" width="154" height="201">' : "";
     var linhas = it.linhas.length ? '<p class="cor-linhas">' + it.linhas.map(esc).join(" · ") + '</p>' : "";
     li.innerHTML =
@@ -204,7 +210,11 @@
 
   document.addEventListener("click", function (e) {
     var add = e.target.closest && e.target.closest(".add");
-    if (add) { toggle(add.getAttribute("data-key")); return; }
+    if (add) {
+      toggle(add.getAttribute("data-key"));
+      if (!reduce) { add.classList.remove("gota"); void add.offsetWidth; add.classList.add("gota"); }
+      return;
+    }
     var rm = e.target.closest && e.target.closest("[data-rm]");
     if (rm) toggle(rm.getAttribute("data-rm"));
   });

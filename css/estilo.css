@@ -132,20 +132,59 @@ ul{list-style:none}
 .prod-img img{width:100%;height:100%;object-fit:contain}
 
 .add{
+  position:relative;isolation:isolate;overflow:hidden;
   margin-top:12px;display:flex;align-items:center;justify-content:center;min-height:44px;padding:8px 10px;border-radius:999px;
-  border:1px solid rgba(255,255,255,.28);font-size:12.5px;font-weight:600;line-height:1.15;text-align:center;
-  transition:background-color .3s var(--ease),color .3s var(--ease),border-color .3s;
+  font-size:12.5px;font-weight:600;line-height:1.15;text-align:center;color:#fff;
+  /* botão líquido: vidro escuro com brilho em cima e volume embaixo */
+  background:
+    radial-gradient(120% 90% at 50% -20%,rgba(255,255,255,.22),rgba(255,255,255,0) 55%),
+    linear-gradient(180deg,#1a2350 0%,#0a1236 100%);
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.28),
+    inset 0 -6px 12px rgba(0,0,0,.45),
+    0 6px 14px -6px rgba(0,0,0,.7);
+  transition:transform .25s var(--ease),box-shadow .45s var(--ease),border-color .45s var(--ease),color .3s,background .45s var(--ease);
+}
+.add::before{ /* reflexo de luz no topo, como gota */
+  content:"";position:absolute;z-index:-1;left:10%;right:10%;top:2px;height:46%;border-radius:999px;
+  background:radial-gradient(100% 100% at 50% 0%,rgba(255,255,255,.28),rgba(255,255,255,0) 70%);filter:blur(1.5px);pointer-events:none;
+}
+.add::after{ /* a tinta acendendo por dentro */
+  content:"";position:absolute;z-index:-2;inset:0;border-radius:inherit;pointer-events:none;
+  background:
+    radial-gradient(90% 120% at 50% 110%,rgba(255,255,255,.35),rgba(255,255,255,0) 60%),
+    radial-gradient(140% 100% at 50% 0%,rgba(255,255,255,.18),rgba(255,255,255,0) 50%),
+    var(--c);
+  opacity:0;transform:scale(.6);transition:opacity .45s var(--ease),transform .55s var(--ease);
 }
 .add svg{width:15px;height:15px;flex:none;margin-right:6px}
 .add .t-add,.add .t-sel{display:inline-flex;align-items:center;justify-content:center;flex-wrap:wrap}
 .add .t-add{flex-wrap:nowrap;text-align:left}
 .add .t-sel{display:none}
-.add:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+@media (hover:hover){
+  .add:hover{border-color:rgba(255,255,255,.3);transform:translateY(-1px);box-shadow:inset 0 1px 0 rgba(255,255,255,.34),inset 0 -6px 12px rgba(0,0,0,.45),0 10px 20px -8px rgba(0,0,0,.8),0 0 18px -6px var(--c)}
+}
+.add:active{transform:scale(.96)}
 .add .rm{flex-basis:100%;font-size:11px;font-weight:500;letter-spacing:.06em;text-decoration:underline;text-underline-offset:2px;opacity:.75;margin-top:2px}
 
 .cor.is-sel{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),0 14px 34px -18px rgba(246,184,15,.55)}
 .cor.is-sel .cor-check{transform:none;opacity:1}
-.cor.is-sel .add{background:var(--gold);border-color:var(--gold);color:var(--navy-deep)}
+.cor.is-sel .add{
+  border-color:color-mix(in srgb,var(--c) 55%,#fff);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.55),
+    inset 0 -6px 12px rgba(0,0,0,.25),
+    0 0 0 1px color-mix(in srgb,var(--c) 70%,transparent),
+    0 6px 26px -4px color-mix(in srgb,var(--c) 85%,transparent),
+    0 0 40px -8px color-mix(in srgb,var(--c) 70%,transparent);
+}
+.cor.is-sel .add::after{opacity:1;transform:none}
+.cor.is-sel.cor-clara .add{color:var(--navy-deep)}
+.cor.is-sel:not(.cor-clara) .add{text-shadow:0 1px 2px rgba(0,0,0,.35)}
+/* apertou: o botão "balança" como líquido */
+.add.gota{animation:gota .6s cubic-bezier(.3,1.6,.5,1)}
+@keyframes gota{0%{transform:scale(.94,.9)}35%{transform:scale(1.05,.96)}65%{transform:scale(.98,1.03)}100%{transform:none}}
 .cor.is-sel .add .t-add{display:none}
 .cor.is-sel .add .t-sel{display:inline-flex}
 
