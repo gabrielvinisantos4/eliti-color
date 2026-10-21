@@ -26,6 +26,6 @@ Onde cadastrar (tudo em js/dados.js)
 
 Pendências
   - Confirmar com a loja os códigos e os tons (hex) das 9 cores Coral.
-  - Fotos reais das latas Coral (não há no projeto; os cards Coral mostram só a amostra).
+  - Latas Coral: recortadas da arte de divulgação "Coleção de cores Coral" (substituir por fotos oficiais quando houver).
   - Adicionar fotos/vídeos reais de obras em assets/obras/ e cadastrar em "obras".
   - Link do mapa: informar a cidade ou o link "Compartilhar" do Google Maps.
