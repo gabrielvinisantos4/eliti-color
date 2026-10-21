@@ -30,6 +30,7 @@
   </a>
   <nav class="topbar-nav">
     <a href="#cores">Cores</a>
+    <a href="#simulador">Simulador</a>
     <a href="#obras">Obras</a>
     <a href="#contato">Contato</a>
   </nav>
@@ -136,6 +137,46 @@
           <p class="sel-via" aria-live="off">Atendimento com <strong class="js-atendente">Tiago</strong></p>
         </div>
       </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SIMULADOR: a cor na parede, antes e depois ============ -->
+<section class="section simulador" id="simulador" aria-labelledby="t-sim">
+  <div class="wrap">
+    <header class="sec-head rv">
+      <span class="eyebrow">Simulador</span>
+      <h2 class="h2" id="t-sim">Veja a cor na parede</h2>
+      <p class="lead">Escolha uma cor e arraste para comparar o antes e o depois.</p>
+    </header>
+
+    <div class="sim rv" id="sim">
+      <figure class="sim-quadro" id="simQuadro">
+        <img class="sim-antes" src="assets/simulador/sala.webp" alt="Sala de estar com sofá, planta e luz do sol entrando pela janela, paredes brancas" width="1600" height="1000" decoding="async" loading="lazy">
+        <canvas class="sim-depois" id="simCanvas" width="1600" height="1000" aria-hidden="true"></canvas>
+        <span class="sim-rotulo sim-r-antes" aria-hidden="true">Antes</span>
+        <span class="sim-rotulo sim-r-depois" aria-hidden="true">Depois</span>
+        <span class="sim-linha" aria-hidden="true"><span class="sim-pega"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l-5 6 5 6M15 6l5 6-5 6"/></svg></span></span>
+        <input class="sim-range" id="simRange" type="range" min="0" max="100" value="50" aria-label="Comparar antes e depois">
+      </figure>
+
+      <div class="sim-painel">
+        <div class="sim-atual">
+          <span class="sim-amostra" id="simAmostra" aria-hidden="true"></span>
+          <div class="sim-atual-txt">
+            <small id="simMarca"></small>
+            <strong id="simNome"></strong>
+            <span id="simCod"></span>
+          </div>
+        </div>
+        <div class="sim-cores" id="simCores" role="group" aria-label="Escolha a cor da parede"></div>
+        <div class="sim-acao" id="simAcao">
+          <button type="button" class="add" id="simAdd" data-key="" aria-pressed="false">
+            <span class="t-add"></span><span class="t-sel"></span>
+          </button>
+        </div>
+        <p class="sim-aviso">Simulação ilustrativa em um ambiente criado digitalmente. As cores exibidas na tela são aproximadas. Confirme a tonalidade na loja.</p>
+      </div>
     </div>
   </div>
 </section>

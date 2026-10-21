@@ -160,8 +160,10 @@
 
   /* ---------- seleção: atualizar interface ---------- */
   var live = $("#live"), ctas = $$(".js-orcamento");
+  var simSync = null;
   function update() {
     var n = state.itens.length;
+    if (simSync) simSync();
     $$(".cor").forEach(function (c) {
       var key = c.getAttribute("data-key"), on = isSel(key), it = ITENS[key];
       c.classList.toggle("is-sel", on);
@@ -303,4 +305,132 @@
   update();
   window.__eliti = { state: state, mensagem: mensagem, link: linkWhats, setAba: setAba };
 
+
+  /* ---------- simulador: a cor na parede, antes e depois ---------- */
+  (function () {
+    var quadro = $("#simQuadro"), cv = $("#simCanvas"); if (!quadro || !cv) return;
+    var img = $(".sim-antes", quadro), range = $("#simRange"), coresBox = $("#simCores"), addBtn = $("#simAdd"), acao = $("#simAcao");
+    var ctx = cv.getContext("2d", { willReadFrequently: true });
+    var W = cv.width, H = cv.height, base = null, mask = null, ref = [1, 1, 1];
+    var prev = document.createElement("canvas"), novo = document.createElement("canvas");
+    prev.width = novo.width = W; prev.height = novo.height = H;
+    var atual = null, anim = 0;
+    // sRGB <-> linear
+    var toLin = new Float32Array(256); for (var i = 0; i < 256; i++) { var c = i / 255; toLin[i] = c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); }
+    function toSrgb(v) { v = v <= 0 ? 0 : v >= 1 ? 1 : v; return 255 * (v <= 0.0031308 ? v * 12.92 : 1.055 * Math.pow(v, 1 / 2.4) - 0.055); }
+    var LUT = new Uint8ClampedArray(4097); for (var j = 0; j <= 4096; j++) LUT[j] = toSrgb(j / 2048); // até 2.0 linear
+    function hexLin(h) { h = h.replace("#", ""); return [0, 2, 4].map(function (o) { return toLin[parseInt(h.substr(o, 2), 16)]; }); }
+
+    // ordem: Coral, depois Mercure
+    var lista = [];
+    CATS.forEach(function (cat) {
+      var g = el("div", { class: "sim-grupo" }, '<span class="sim-grupo-nome">' + esc(cat.marca) + '</span>');
+      var row = el("div", { class: "sim-chips" });
+      (cat.itens || []).forEach(function (it) {
+        var k = cat.id + ":" + it.id, d = ITENS[k]; if (!d || !d.hex) return;
+        lista.push(k);
+        var b = el("button", { type: "button", class: "sim-chip" + (clara(d.hex) ? " clara" : ""), "data-sim": k, "aria-pressed": "false", "aria-label": d.marca + " " + d.nome, title: d.nome, style: "--c:" + d.hex });
+        row.appendChild(b);
+      });
+      g.appendChild(row); coresBox.appendChild(g);
+    });
+
+    function carregar(src) { return new Promise(function (ok, erro) { var im = new Image(); im.onload = function () { ok(im); }; im.onerror = erro; im.src = src; }); }
+    function preparar() {
+      return Promise.all([img.complete && img.naturalWidth ? img : carregar(img.currentSrc || img.src), carregar("assets/simulador/mascara.webp")]).then(function (r) {
+        var t = document.createElement("canvas"); t.width = W; t.height = H; var tc = t.getContext("2d", { willReadFrequently: true });
+        tc.drawImage(r[0], 0, 0, W, H); base = tc.getImageData(0, 0, W, H).data;
+        tc.clearRect(0, 0, W, H); tc.drawImage(r[1], 0, 0, W, H); var m = tc.getImageData(0, 0, W, H).data;
+        mask = new Float32Array(W * H); var soma = [0, 0, 0], n = 0, lums = [];
+        for (var p = 0, q = 0; p < mask.length; p++, q += 4) {
+          var a = m[q] / 255; mask[p] = a;
+          if (a > 0.98) lums.push(toLin[base[q]] * 0.2126 + toLin[base[q + 1]] * 0.7152 + toLin[base[q + 2]] * 0.0722);
+        }
+        // branco de referência = luz típica da parede (mediana), para a cor sair fiel onde a luz é "normal"
+        lums.sort(function (a, b) { return a - b; });
+        var med = lums[Math.floor(lums.length * 0.55)] || 0.7;
+        for (var p2 = 0, q2 = 0; p2 < mask.length; p2 += 7, q2 += 28) {
+          if (mask[p2] > 0.98) { var L = toLin[base[q2]] * 0.2126 + toLin[base[q2 + 1]] * 0.7152 + toLin[base[q2 + 2]] * 0.0722; if (Math.abs(L - med) < med * 0.08) { soma[0] += toLin[base[q2]]; soma[1] += toLin[base[q2 + 1]]; soma[2] += toLin[base[q2 + 2]]; n++; } }
+        }
+        ref = n ? [soma[0] / n, soma[1] / n, soma[2] / n] : [med, med, med];
+      });
+    }
+    function pintar(destino, hex) {
+      var c = hexLin(hex), k0 = c[0] / ref[0], k1 = c[1] / ref[1], k2 = c[2] / ref[2];
+      var dc = destino.getContext("2d"), out = dc.createImageData(W, H), o = out.data;
+      for (var p = 0, q = 0; p < mask.length; p++, q += 4) {
+        var a = mask[p], r = base[q], g = base[q + 1], b = base[q + 2];
+        if (a > 0) {
+          var nr = LUT[Math.min(4096, (toLin[r] * k0 * 2048) | 0)], ng = LUT[Math.min(4096, (toLin[g] * k1 * 2048) | 0)], nb = LUT[Math.min(4096, (toLin[b] * k2 * 2048) | 0)];
+          r = r + (nr - r) * a; g = g + (ng - g) * a; b = b + (nb - b) * a;
+        }
+        o[q] = r; o[q + 1] = g; o[q + 2] = b; o[q + 3] = 255;
+      }
+      dc.putImageData(out, 0, 0);
+    }
+    function escolher(k, ox, oy) {
+      if (!ITENS[k]) return; atual = k;
+      var it = ITENS[k];
+      $("#simAmostra").style.setProperty("--c", it.hex);
+      $("#simMarca").textContent = it.marca;
+      $("#simNome").textContent = it.nome;
+      $("#simCod").textContent = it.codigo ? "Código " + it.codigo : (it.linhas.length ? "Linhas: " + it.linhas.join(", ") : "");
+      acao.style.setProperty("--c", it.hex); acao.classList.toggle("cor-clara", clara(it.hex));
+      addBtn.setAttribute("data-key", k);
+      $$(".sim-chip", coresBox).forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-sim") === k ? "true" : "false"); });
+      simSync();
+      if (!base) return;
+      pintar(novo, it.hex);
+      cancelAnimationFrame(anim);
+      if (reduce) { ctx.drawImage(novo, 0, 0); prev.getContext("2d").drawImage(novo, 0, 0); return; }
+      // a cor nova se espalha pela parede como tinta
+      var cx = ox == null ? W * 0.5 : ox, cy = oy == null ? H * 0.4 : oy, maxR = Math.hypot(Math.max(cx, W - cx), Math.max(cy, H - cy)), t0 = performance.now(), D = 650;
+      (function passo(t) {
+        var e = Math.max(0, Math.min(1, (t - t0) / D)), k2 = 1 - Math.pow(1 - e, 3);
+        ctx.drawImage(prev, 0, 0);
+        ctx.save(); ctx.beginPath(); ctx.arc(cx, cy, maxR * k2, 0, Math.PI * 2); ctx.clip(); ctx.drawImage(novo, 0, 0); ctx.restore();
+        if (e < 1) anim = requestAnimationFrame(passo); else prev.getContext("2d").drawImage(novo, 0, 0);
+      })(t0);
+    }
+    simSync = function () {
+      var k = addBtn.getAttribute("data-key"); if (!k || !ITENS[k]) return;
+      var on = isSel(k), it = ITENS[k];
+      acao.classList.toggle("is-sel", on);
+      addBtn.setAttribute("aria-pressed", on ? "true" : "false");
+      addBtn.setAttribute("aria-label", (on ? "Remover " : "Adicionar ") + it.marca + " " + it.nome + (on ? " da seleção" : " à seleção"));
+      $(".t-add", addBtn).innerHTML = ICON_PLUS + "Adicionar " + esc(it.nome) + " à seleção";
+      $(".t-sel", addBtn).innerHTML = ICON_CHECK + esc(it.nome) + " está na seleção<span class=\"rm\">Remover</span>";
+    };
+    coresBox.addEventListener("click", function (e) {
+      var b = e.target.closest(".sim-chip"); if (!b) return;
+      escolher(b.getAttribute("data-sim"));
+    });
+
+    // antes e depois: arrastar em qualquer ponto da imagem
+    function pos(v) { v = Math.max(0, Math.min(100, v)); quadro.style.setProperty("--pos", v + "%"); range.value = v; }
+    var arrastando = false;
+    function deX(e) { var r = quadro.getBoundingClientRect(); return (e.clientX - r.left) / r.width * 100; }
+    quadro.addEventListener("pointerdown", function (e) { if (e.button > 0) return; arrastando = true; quadro.setPointerCapture(e.pointerId); quadro.classList.add("arrastando"); pos(deX(e)); });
+    quadro.addEventListener("pointermove", function (e) { if (arrastando) pos(deX(e)); });
+    function soltar() { arrastando = false; quadro.classList.remove("arrastando"); }
+    quadro.addEventListener("pointerup", soltar); quadro.addEventListener("pointercancel", soltar);
+    range.addEventListener("input", function () { pos(+range.value); });
+    pos(50);
+
+    var inicial = state.itens.filter(function (k) { return lista.indexOf(k) !== -1; })[0] || (lista.indexOf("coral:oceano") !== -1 ? "coral:oceano" : lista[0]);
+    var iniciado = false;
+    function iniciar() {
+      if (iniciado) return; iniciado = true;
+      preparar().then(function () {
+        ctx.drawImage(img, 0, 0, W, H); prev.getContext("2d").drawImage(img, 0, 0, W, H);
+        quadro.classList.add("pronto");
+        escolher(inicial);
+      }).catch(function () { quadro.classList.add("sem-sim"); });
+    }
+    escolher(inicial);
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { io.disconnect(); iniciar(); } }, { rootMargin: "600px 0px" });
+      io.observe(quadro);
+    } else iniciar();
+  })();
 })();
