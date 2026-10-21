@@ -205,10 +205,86 @@
     .address{display:flex;justify-content:center;margin-top:clamp(22px,4vh,40px)}
     .map{width:min(100%,520px)}
   }
+
+  /* =========================================================
+     COLEÇÃO DE CORES — scroll com a lata despejando tinta
+     ========================================================= */
+  .scroll-cue{
+    margin-top:clamp(14px,2.4vh,22px);display:inline-flex;align-items:center;gap:8px;
+    font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.7);
+  }
+  .scroll-cue svg{width:14px;height:14px;animation:cue 1.8s ease-in-out infinite}
+  @keyframes cue{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+
+  .story{position:relative;height:calc(var(--n,9) * 85svh + 100svh);background:#07090f}
+  .story-stage{
+    position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;isolation:isolate;
+    background:radial-gradient(120% 90% at 62% 55%, #1a1d26 0%, #0b0d13 55%, #050608 100%);
+  }
+  .story-glow{
+    position:absolute;inset:0;z-index:0;pointer-events:none;transition:background .6s ease;
+    background:radial-gradient(42% 46% at var(--gx,62%) var(--gy,58%), var(--glow,rgba(255,255,255,.08)) 0%, transparent 70%);
+  }
+  .story canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1;
+    -webkit-mask-image:linear-gradient(180deg,#000 48%,transparent 65%);mask-image:linear-gradient(180deg,#000 48%,transparent 65%)}
+  .story-copy{
+    position:absolute;z-index:2;left:var(--gutter);right:var(--gutter);bottom:max(26px,env(safe-area-inset-bottom));
+    display:flex;flex-direction:column;gap:10px;
+  }
+  .story-eyebrow{
+    display:flex;align-items:center;gap:12px;
+    font-size:10.5px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);
+  }
+  .story-eyebrow::before{content:"";width:28px;height:1px;background:var(--gold)}
+  .story-count{font-size:12px;font-weight:500;letter-spacing:.2em;color:rgba(255,255,255,.55);font-variant-numeric:tabular-nums}
+  .story-name{
+    font-size:clamp(40px,12vw,104px);font-weight:700;line-height:.95;letter-spacing:-.02em;color:#fff;
+    text-transform:uppercase;
+  }
+  .story-code{display:flex;align-items:center;gap:12px;font-size:clamp(14px,3.8vw,18px);font-weight:500;letter-spacing:.14em;color:rgba(255,255,255,.82)}
+  .story-code .chip{width:22px;height:22px;border-radius:50%;background:var(--c,#999);box-shadow:inset 0 0 0 1px rgba(255,255,255,.35)}
+  .story-copy .swap{transition:opacity .35s ease, transform .45s var(--ease)}
+  .story-copy.out .swap{opacity:0;transform:translateY(10px)}
+
+  .story-dots{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+  .story-dots button{
+    width:26px;height:26px;border-radius:50%;border:0;padding:0;cursor:pointer;background:var(--c);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.28);transform:scale(.72);transition:transform .3s var(--ease),box-shadow .3s;
+  }
+  .story-dots button[aria-current="true"]{transform:scale(1);box-shadow:inset 0 0 0 1px rgba(255,255,255,.5),0 0 0 2px #0b0d13,0 0 0 3px rgba(255,255,255,.75)}
+  .story-dots button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+  .story-loading{position:absolute;z-index:3;left:50%;top:50%;transform:translate(-50%,-50%);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.5);transition:opacity .4s}
+  .story.ready .story-loading{opacity:0}
+  .story-note{position:absolute;z-index:2;right:var(--gutter);top:max(18px,env(safe-area-inset-top));font-size:10px;letter-spacing:.06em;color:rgba(255,255,255,.4);max-width:260px;text-align:right}
+
+  .story-stage::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(180deg,transparent 55%,rgba(5,6,8,.55) 78%,rgba(5,6,8,.85) 100%)}
+  @media (min-width:900px){
+    .story canvas{-webkit-mask-image:none;mask-image:none}
+    .story-stage::after{background:linear-gradient(90deg,transparent 42%,rgba(5,6,8,.55) 62%,rgba(5,6,8,.8) 100%)}
+    .story-copy{left:auto;right:clamp(40px,6vw,110px);bottom:auto;top:50%;transform:translateY(-50%);width:min(36vw,520px);align-items:flex-start}
+    .story-name{font-size:clamp(56px,6.4vw,112px)}
+  }
+
+  /* ---------- Chamada final ---------- */
+  .cta{position:relative;background:linear-gradient(180deg,#07090f 0%, var(--navy-deep) 30%);padding:clamp(64px,12vh,120px) var(--gutter) max(28px,env(safe-area-inset-bottom))}
+  .cta-inner{width:min(100%,860px);margin:0 auto;display:flex;flex-direction:column;gap:clamp(24px,4vh,40px)}
+  .cta h2{font-size:clamp(28px,7vw,48px);font-weight:700;line-height:1.05;letter-spacing:-.01em}
+  .cta h2 em{font-style:normal;color:var(--gold)}
+  .cta .lead{color:var(--muted);font-size:15px;margin-top:10px}
+  .cta-actions{display:grid;gap:14px}
+  .cta-actions .wa .label small{opacity:.6}
+  .cta .address{margin-top:0}
+  .cta-foot{display:flex;flex-direction:column;gap:14px;align-items:center;padding-top:28px;border-top:1px solid var(--hair);text-align:center}
+  .cta-foot img{width:180px;height:auto;opacity:.9}
+  .cta-foot p{font-size:11px;line-height:1.5;color:rgba(255,255,255,.45);max-width:520px}
+  @media (min-width:768px){ .cta-actions{grid-template-columns:1fr 1fr} .cta .address{display:block} .cta .map{width:100%} }
 </style>
 </head>
 <body>
-<main class="stage">
+<main>
+<section class="stage" id="inicio">
   <div class="media" aria-hidden="true">
     <video autoplay muted loop playsinline preload="auto" poster="assets/eliticolor-poster.jpg" disablepictureinpicture>
       <source src="assets/eliticolor-bg.webm" type="video/webm">
@@ -226,6 +302,7 @@
         </picture>
       </h1>
       <p class="tagline"><span class="t1">Tudo o que você precisa em</span><span class="t2">tintas <em>imobiliárias</em><br> e <em>industriais</em></span></p>
+      <a class="scroll-cue" href="#cores">Role e veja as cores <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
     </header>
 
     <div class="info">
@@ -263,6 +340,56 @@
       </address>
     </div>
   </div>
+</section>
+
+<!-- ============ COLEÇÃO DE CORES (scroll) ============ -->
+<section class="story" id="cores" aria-label="Coleção de cores Coral disponível na Eliti Color">
+  <div class="story-stage">
+    <div class="story-glow"></div>
+    <canvas id="paintCanvas" aria-hidden="true"></canvas>
+    <div class="story-loading">Carregando cores…</div>
+    <div class="story-copy" id="storyCopy">
+      <span class="story-eyebrow">Coleção de cores Coral</span>
+      <span class="story-count swap" id="storyCount">01 / 09</span>
+      <h2 class="story-name swap" id="storyName">Algodão Egípcio</h2>
+      <p class="story-code swap"><span class="chip" id="storyChip"></span><span id="storyCode">CORAL 1036-2</span></p>
+      <nav class="story-dots" id="storyDots" aria-label="Escolher cor"></nav>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHAMADA FINAL ============ -->
+<section class="cta" id="contato" aria-labelledby="t-cta">
+  <div class="cta-inner">
+    <div>
+      <h2 id="t-cta">Gostou de alguma cor? <em>Fale com a gente.</em></h2>
+      <p class="lead">Atendimento direto pelo WhatsApp.</p>
+    </div>
+    <div class="cta-actions">
+      <a class="wa" href="https://wa.me/5544991113969" target="_blank" rel="noopener" aria-label="Conversar com Tiago no WhatsApp">
+        <span class="seal"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3c-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4.1 1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2Z"/></svg></span>
+        <span class="label"><small>WhatsApp · (44) 99111-3969</small>Conversar com Tiago</span>
+        <span class="arrow"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="wa" href="https://wa.me/5544998130641" target="_blank" rel="noopener" aria-label="Conversar com Eliel no WhatsApp">
+        <span class="seal"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3c-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4.1 1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2Z"/></svg></span>
+        <span class="label"><small>WhatsApp · (44) 99813-0641</small>Conversar com Eliel</span>
+        <span class="arrow"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+    <address class="address">
+      <a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Rua+Minas+Gerais%2C+894%2C+Centro" target="_blank" rel="noopener" aria-label="Abrir endereço no Google Maps: R. Minas Gerais, 894 - Centro">
+        <span class="seal"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.1 7-11.5A7 7 0 0 0 5 9.5C5 14.9 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
+        <span class="label"><small>Como chegar</small><strong>R. Minas Gerais, 894</strong><span class="sub">Centro · Ver no mapa</span></span>
+        <span class="arrow"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </address>
+    <footer class="cta-foot">
+      <picture><source srcset="assets/logo-eliticolor.webp" type="image/webp"><img src="assets/logo-eliticolor.png" width="1200" height="234" alt="Eliti Color — Centro de Pinturas" loading="lazy"></picture>
+      <p>Revenda autorizada Coral. As cores exibidas na tela são aproximadas e podem variar conforme o monitor; confira a cor na loja antes de comprar.</p>
+    </footer>
+  </div>
+</section>
 </main>
 
 <script>
@@ -274,6 +401,146 @@
     v.muted = true;
     var p = v.play(); if (p && p.catch) p.catch(function(){});
   })();
+</script>
+
+<script>
+/* ===== Coleção de cores: lata despejando tinta, controlada pelo scroll ===== */
+(function(){
+  // PREENCHER/CONFIRMAR: códigos e tons serão confirmados com a loja
+  var CORES = [
+    {nome:"Algodão Egípcio", codigo:"CORAL 1036-2", hex:"#EBE3D6"},
+    {nome:"Ovelha",          codigo:"CORAL 1002-4", hex:"#DED2C1"},
+    {nome:"Areia",           codigo:"CORAL 1376-4", hex:"#BBA384"},
+    {nome:"Crômio",          codigo:"CORAL 2685-4", hex:"#928473"},
+    {nome:"Cenoura",         codigo:"CORAL 2286-4", hex:"#B04A21"},
+    {nome:"Espinafre",       codigo:"CORAL 1958-6", hex:"#2A432C"},
+    {nome:"Oceano",          codigo:"CORAL 2871-6", hex:"#0B3452"},
+    {nome:"Cinza Real",      codigo:"CORAL 7151-4", hex:"#92908E"},
+    {nome:"Elefante",        codigo:"CORAL 2371-4", hex:"#3E3E3E"}
+  ];
+  var N_FRAMES = 60;
+  var story = document.getElementById('cores');
+  var canvas = document.getElementById('paintCanvas');
+  if (!story || !canvas || !canvas.getContext) return;
+  story.style.setProperty('--n', CORES.length);
+  var ctx = canvas.getContext('2d');
+  var off = document.createElement('canvas'), octx = off.getContext('2d');
+  var glow = story.querySelector('.story-glow');
+  var copy = document.getElementById('storyCopy');
+  var elName = document.getElementById('storyName'), elCode = document.getElementById('storyCode');
+  var elCount = document.getElementById('storyCount'), elChip = document.getElementById('storyChip');
+  var dotsWrap = document.getElementById('storyDots');
+
+  function hexRgb(h){ h=h.replace('#',''); return [parseInt(h.substr(0,2),16),parseInt(h.substr(2,2),16),parseInt(h.substr(4,2),16)]; }
+  var RGB = CORES.map(function(c){ return hexRgb(c.hex); });
+  function lum(c){ return (0.2126*c[0]+0.7152*c[1]+0.0722*c[2])/255; }
+
+  CORES.forEach(function(c,i){
+    var b=document.createElement('button'); b.type='button'; b.style.setProperty('--c',c.hex);
+    b.setAttribute('aria-label','Ver cor '+c.nome);
+    b.addEventListener('click',function(){
+      var top = story.offsetTop + (i+0.5)/CORES.length * (story.offsetHeight - innerHeight);
+      scrollTo({top:top, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+    });
+    dotsWrap.appendChild(b);
+  });
+  var dots = dotsWrap.querySelectorAll('button');
+
+  var mobile = Math.min(innerWidth, innerHeight) < 700;
+  var dir = 'assets/seq/' + (mobile ? 'm' : 'd') + '/';
+  var frames = new Array(N_FRAMES), loaded = 0;
+  function pad(n){ return ('00'+n).slice(-3); }
+  for (var i=0;i<N_FRAMES;i++){
+    (function(i){
+      var im = new Image(); im.decoding='async';
+      im.onload = function(){ frames[i]=im; loaded++; if (i===0 || loaded===N_FRAMES){ story.classList.add('ready'); request(); } };
+      im.src = dir + pad(i) + '.webp';
+    })(i);
+  }
+
+  var W=0,H=0,dpr=1;
+  function resize(){
+    dpr = Math.min(window.devicePixelRatio||1, 1.75);
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    canvas.width = Math.round(W*dpr); canvas.height = Math.round(H*dpr);
+    request();
+  }
+  // posição do quadro (16:9) no palco
+  function layout(){
+    var portrait = W < 900;
+    if (portrait){
+      var h = H*0.66, w = h*16/9;
+      return {x: W*0.62 - w*0.62, y: -H*0.02, w:w, h:h};      // jato de tinta perto do centro
+    }
+    var h2 = H*1.04, w2 = h2*16/9;
+    return {x: W*0.30 - w2*0.62, y: -H*0.02, w:w2, h:h2};       // jato à esquerda, texto à direita
+  }
+
+  var lastIdx = -1, ticking = false;
+  function request(){ if(!ticking){ ticking=true; requestAnimationFrame(draw); } }
+  addEventListener('scroll', request, {passive:true});
+  addEventListener('resize', resize);
+
+  function progress(){
+    var r = story.getBoundingClientRect();
+    var total = story.offsetHeight - innerHeight;
+    return Math.min(1, Math.max(0, -r.top / total));
+  }
+
+  function setCopy(idx){
+    if (idx===lastIdx) return;
+    var first = lastIdx===-1; lastIdx = idx;
+    var c = CORES[idx];
+    var apply = function(){
+      elName.textContent = c.nome; elCode.textContent = c.codigo;
+      elCount.textContent = pad(idx+1).slice(-2) + ' / ' + pad(CORES.length).slice(-2);
+      elChip.style.setProperty('--c', c.hex);
+      dots.forEach(function(d,k){ d.setAttribute('aria-current', k===idx ? 'true':'false'); });
+      copy.classList.remove('out');
+    };
+    if (first) apply(); else { copy.classList.add('out'); setTimeout(apply, 220); }
+  }
+
+  function draw(){
+    ticking = false;
+    if (!W) resize();
+    var p = progress();
+    // cor: uma faixa por cor, com transição suave no fim de cada faixa
+    var seg = p * CORES.length, idx = Math.min(CORES.length-1, Math.floor(seg)), t = seg - idx;
+    var a = RGB[idx], b = RGB[Math.min(CORES.length-1, idx+1)];
+    var k = idx < CORES.length-1 ? Math.max(0, (t-0.72)/0.28) : 0;
+    k = k*k*(3-2*k);
+    var col = [0,1,2].map(function(j){ return Math.round(a[j] + (b[j]-a[j])*k); });
+    setCopy(k > 0.5 ? Math.min(CORES.length-1, idx+1) : idx);
+
+    // brilho atrás do jato: mais forte para cores escuras
+    var L = lum(col), ga = L < 0.25 ? 0.30 : L < 0.5 ? 0.18 : 0.10;
+    glow.style.setProperty('--glow', 'rgba('+Math.round(160+col[0]*0.37)+','+Math.round(160+col[1]*0.37)+','+Math.round(160+col[2]*0.37)+','+ga+')');
+
+    // quadro do vídeo conforme o scroll
+    var fi = Math.min(N_FRAMES-1, Math.round(p*(N_FRAMES-1)));
+    var im = frames[fi];
+    if (!im){ for (var s=fi; s>=0; s--) if (frames[s]) { im=frames[s]; break; } }
+    ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,canvas.width,canvas.height);
+    if (!im) return;
+    var L2 = layout(), sw = im.naturalWidth, sh = im.naturalHeight/2;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.globalCompositeOperation='source-over';
+    ctx.drawImage(im, 0,0,sw,sh, L2.x,L2.y,L2.w,L2.h);                 // lata (desfocada)
+
+    var ow = Math.round(L2.w*dpr), oh = Math.round(L2.h*dpr);
+    if (off.width!==ow || off.height!==oh){ off.width=ow; off.height=oh; }
+    octx.globalCompositeOperation='source-over';
+    octx.fillStyle='rgb('+col.join(',')+')'; octx.fillRect(0,0,ow,oh);
+    octx.globalCompositeOperation='hard-light';                       // aplica a cor mantendo brilho e sombra
+    octx.drawImage(im, 0,sh,sw,sh, 0,0,ow,oh);
+    octx.globalCompositeOperation='destination-in';                   // só onde há tinta
+    octx.drawImage(im, 0,sh,sw,sh, 0,0,ow,oh);
+    ctx.setTransform(1,0,0,1,0,0);
+    ctx.drawImage(off, Math.round(L2.x*dpr), Math.round(L2.y*dpr));
+  }
+  resize();
+})();
 </script>
 </body>
 </html>
