@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Eliti Color — Centro de Pinturas</title>
-<meta name="description" content="Eliti Color — Centro de Pinturas. Tudo o que você precisa em tintas imobiliárias e industriais. Fale com Tiago ou Eliel pelo WhatsApp. R. Minas Gerais, 894 - Centro.">
+<meta name="description" content="Eliti Color — Centro de Pinturas. Catálogo de cores Coral: monte sua seleção e peça seu orçamento pelo WhatsApp. R. Minas Gerais, 894 - Centro.">
 <meta name="theme-color" content="#060c2a">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:title" content="Eliti Color — Centro de Pinturas">
-<meta property="og:description" content="Tudo o que você precisa em tintas imobiliárias e industriais. Fale com Tiago ou Eliel pelo WhatsApp. R. Minas Gerais, 894 - Centro.">
+<meta property="og:description" content="Catálogo de cores Coral: monte sua seleção e peça seu orçamento pelo WhatsApp.">
 <meta property="og:image" content="https://eliti-color.vercel.app/assets/eliticolor-poster.jpg">
 <meta property="og:url" content="https://eliti-color.vercel.app/">
 <link rel="canonical" href="https://eliti-color.vercel.app/">
@@ -19,528 +19,186 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --navy:#0a1440;
-    --navy-deep:#060c2a;
-    --gold:#f6b80f;
-    --wa:#25d366;
-    --white:#ffffff;
-    --muted:rgba(255,255,255,.66);
-    --hair:rgba(255,255,255,.16);
-    --glass:rgba(255,255,255,.07);
-    --gutter:clamp(22px,6vw,72px);
-    --ease:cubic-bezier(.2,.7,.2,1);
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%}
-  body{
-    background:var(--navy-deep);color:var(--white);
-    font-family:"Montserrat",system-ui,-apple-system,"Segoe UI",sans-serif;
-    -webkit-font-smoothing:antialiased;overflow-x:hidden;
-  }
-  a{color:inherit;text-decoration:none}
-  :focus-visible{outline:2px solid var(--gold);outline-offset:4px;border-radius:999px}
-
-  /* ---------- Vídeo em tela cheia ---------- */
-  .stage{position:relative;min-height:100vh;min-height:100svh;isolation:isolate;overflow:hidden}
-  .media{
-    position:absolute;inset:0;z-index:-2;
-    background:var(--navy) url("assets/eliticolor-poster.jpg") center/cover no-repeat; /* fallback */
-  }
-  .media video{width:100%;height:100%;object-fit:cover;display:block}
-  .shade{
-    position:absolute;inset:0;z-index:-1;pointer-events:none;
-    background:linear-gradient(180deg,
-      rgba(6,12,42,.78) 0%,
-      rgba(6,12,42,.45) 22%,
-      rgba(6,12,42,.24) 34%,
-      rgba(6,12,42,.34) 46%,
-      rgba(6,12,42,.88) 70%,
-      rgba(6,12,42,.97) 100%);
-  }
-
-  /* ---------- Estrutura ---------- */
-  .content{
-    min-height:100vh;min-height:100svh;display:flex;flex-direction:column;
-    padding:max(28px,env(safe-area-inset-top)) var(--gutter) max(20px,env(safe-area-inset-bottom));
-  }
-  .brand{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:clamp(18px,6vh,64px);padding-bottom:32px;text-align:center}
-  /* Frase da marca: duas camadas tipográficas */
-  .tagline{
-    margin-top:clamp(22px,3.6vh,36px);
-    display:flex;flex-direction:column;align-items:center;gap:10px;
-  }
-  .tagline::before{content:"";width:36px;height:2px;border-radius:2px;background:var(--gold);margin-bottom:6px}
-  .tagline .t1{
-    font-size:clamp(15px,4.2vw,20px);font-weight:300;letter-spacing:.04em;color:rgba(255,255,255,.82);
-  }
-  .tagline .t2{
-    font-size:clamp(20px,6.2vw,34px);font-weight:700;line-height:1.12;
-    letter-spacing:.06em;text-transform:uppercase;color:#fff;
-  }
-  .tagline .t2 em{font-style:normal;color:var(--gold)}
-  .brand img{width:min(86vw,540px);height:auto;display:block}
-
-  .eyebrow{
-    display:flex;align-items:center;gap:14px;margin-bottom:6px;
-    font-size:10.5px;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);
-  }
-  .eyebrow::before{content:"";width:28px;height:1px;background:var(--gold)}
-
-  /* ---------- Contatos ---------- */
-  .contacts{list-style:none;display:grid}
-  .contact{padding:20px 0;border-bottom:1px solid var(--hair)}
-  .contact:last-child{border-bottom:0}
-  .who{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
-  .name{
-    font-size:11px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);
-  }
-  .num{
-    display:block;margin:6px 0 16px;
-    font-size:clamp(27px,8vw,38px);font-weight:300;letter-spacing:-.01em;line-height:1.05;
-    font-variant-numeric:tabular-nums lining-nums;white-space:nowrap;
-    transition:color .25s var(--ease);
-  }
-  .num:hover{color:var(--gold)}
-
-  /* Botão WhatsApp — vidro fosco, ícone em selo verde, seta que desliza */
-  .wa{
-    --h:54px;
-    position:relative;display:flex;align-items:center;gap:14px;
-    width:100%;height:var(--h);padding:0 8px 0 6px;border-radius:999px;
-    background:var(--glass);
-    border:1px solid rgba(255,255,255,.22);
-    -webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);
-    font-size:14px;font-weight:600;letter-spacing:.02em;
-    transition:background-color .35s var(--ease),border-color .35s var(--ease),color .35s var(--ease);
-  }
-  .wa .seal{
-    width:calc(var(--h) - 12px);height:calc(var(--h) - 12px);flex:none;border-radius:50%;
-    display:grid;place-items:center;background:var(--wa);color:#fff;
-    transition:transform .35s var(--ease);
-  }
-  .wa .seal svg{width:21px;height:21px}
-  .wa .label{flex:1;display:flex;flex-direction:column;line-height:1.15}
-  .wa .label small{font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;opacity:.6}
-  .wa .arrow{
-    width:38px;height:38px;flex:none;border-radius:50%;display:grid;place-items:center;
-    transition:transform .35s var(--ease),background-color .35s var(--ease);
-  }
-  .wa .arrow svg{width:16px;height:16px}
-  .wa:hover{background:#fff;border-color:#fff;color:var(--navy-deep)}
-  .wa:hover .arrow{transform:translateX(3px);background:var(--navy-deep);color:#fff}
-  .wa:hover .seal{transform:rotate(-8deg)}
-  .wa:active{transform:scale(.985)}
-
-  /* ---------- Endereço ---------- */
-  /* Endereço — botão de destaque, mesmo idioma visual do WhatsApp */
-  .address{margin-top:18px;padding-top:20px;border-top:1px solid var(--hair);font-style:normal}
-  .map{
-    display:flex;align-items:center;gap:14px;width:100%;
-    min-height:72px;padding:8px 10px 8px 8px;border-radius:999px;
-    background:rgba(246,184,15,.10);border:1px solid rgba(246,184,15,.45);
-    -webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);
-    transition:background-color .35s var(--ease),border-color .35s var(--ease),color .35s var(--ease);
-  }
-  .map .seal{
-    width:52px;height:52px;flex:none;border-radius:50%;display:grid;place-items:center;
-    background:var(--gold);color:var(--navy-deep);transition:transform .35s var(--ease);
-  }
-  .map .seal svg{width:24px;height:24px}
-  .map .label{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;line-height:1.15}
-  .map .label small{font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
-  .map .label strong{font-size:clamp(17px,5vw,21px);font-weight:600;color:#fff;white-space:nowrap}
-  .map .label .sub{font-size:13px;font-weight:400;color:var(--muted)}
-  .map:hover .label .sub{color:rgba(6,12,42,.7)}
-  .map .arrow{
-    width:40px;height:40px;flex:none;border-radius:50%;display:grid;place-items:center;
-    background:rgba(255,255,255,.1);transition:transform .35s var(--ease),background-color .35s var(--ease);
-  }
-  .map .arrow svg{width:16px;height:16px}
-  .map:hover{background:var(--gold);border-color:var(--gold)}
-  .map:hover .label small,.map:hover .label strong{color:var(--navy-deep)}
-  .map:hover .arrow{background:var(--navy-deep);color:#fff;transform:translateX(3px)}
-  .map:hover .seal{background:var(--navy-deep);color:var(--gold);transform:translateY(-2px)}
-  .map:active{transform:scale(.985)}
-
-  /* ---------- Entrada sutil ---------- */
-  @media (prefers-reduced-motion:no-preference){
-    .brand img,.reveal{animation:rise .8s var(--ease) both}
-    /* Entrada da frase: fade com desfoque e letras que se aproximam */
-    .tagline::before{animation:line .9s var(--ease) .25s both}
-    .tagline .t1{animation:focus 1.1s var(--ease) .35s both}
-    .tagline .t2{animation:track 1.4s var(--ease) .5s both}
-    @keyframes line{from{transform:scaleX(0);opacity:0}to{transform:none;opacity:1}}
-    @keyframes focus{from{opacity:0;filter:blur(8px);transform:translateY(8px)}to{opacity:1;filter:none;transform:none}}
-    @keyframes track{from{opacity:0;filter:blur(10px);letter-spacing:.28em}to{opacity:1;filter:none;letter-spacing:.06em}}
-    .brand img{animation-name:fade}
-    .reveal.eyebrow{animation-delay:.08s}
-    .contact.reveal:nth-child(1){animation-delay:.14s}
-    .contact.reveal:nth-child(2){animation-delay:.22s}
-    .address.reveal{animation-delay:.3s}
-    @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-    @keyframes fade{from{opacity:0;transform:scale(.985)}to{opacity:1;transform:none}}
-  }
-
-  /* ---------- Tablet / computador ---------- */
-  @media (min-width:768px){
-    .shade{
-      background:
-        radial-gradient(110% 75% at 50% 42%, rgba(6,12,42,.18) 0%, rgba(6,12,42,.5) 62%, rgba(6,12,42,.82) 100%),
-        linear-gradient(180deg, rgba(6,12,42,.4) 0%, rgba(6,12,42,0) 26%, rgba(6,12,42,.6) 68%, rgba(6,12,42,.95) 100%);
-    }
-    .content{align-items:center;justify-content:space-between}
-    .brand{flex:0;padding-top:clamp(40px,10vh,120px)}
-    .brand img{width:min(54vw,640px)}
-    .tagline br{display:none}
-    .tagline .t2{font-size:clamp(26px,2.6vw,38px)}
-    .info{width:min(100%,860px)}
-    .eyebrow{justify-content:center;margin-bottom:14px}
-    .eyebrow::after{content:"";width:28px;height:1px;background:var(--gold)}
-    .contacts{grid-template-columns:1fr 1fr}
-    .contact{padding:14px 40px 18px;border-bottom:0}
-    .contact:first-child{border-right:1px solid var(--hair)}
-    .num{font-size:clamp(30px,3.4vw,42px)}
-    .address{display:flex;justify-content:center;margin-top:clamp(22px,4vh,40px)}
-    .map{width:min(100%,520px)}
-  }
-
-  /* =========================================================
-     COLEÇÃO DE CORES — scroll com a lata despejando tinta
-     ========================================================= */
-  .scroll-cue{
-    margin-top:clamp(14px,2.4vh,22px);display:inline-flex;align-items:center;gap:8px;
-    font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.7);
-  }
-  .scroll-cue svg{width:14px;height:14px;animation:cue 1.8s ease-in-out infinite}
-  @keyframes cue{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
-
-  .story{position:relative;height:calc(var(--n,9) * 85svh + 100svh);background:#07090f}
-  .story-stage{
-    position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;isolation:isolate;
-    background:radial-gradient(120% 90% at 62% 55%, #1a1d26 0%, #0b0d13 55%, #050608 100%);
-  }
-  .story-glow{
-    position:absolute;inset:0;z-index:0;pointer-events:none;transition:background .6s ease;
-    background:radial-gradient(42% 46% at var(--gx,62%) var(--gy,58%), var(--glow,rgba(255,255,255,.08)) 0%, transparent 70%);
-  }
-  .story canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1;
-    -webkit-mask-image:linear-gradient(180deg,#000 48%,transparent 65%);mask-image:linear-gradient(180deg,#000 48%,transparent 65%)}
-  .story-copy{
-    position:absolute;z-index:2;left:var(--gutter);right:var(--gutter);bottom:max(26px,env(safe-area-inset-bottom));
-    display:flex;flex-direction:column;gap:10px;
-  }
-  .story-eyebrow{
-    display:flex;align-items:center;gap:12px;
-    font-size:10.5px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);
-  }
-  .story-eyebrow::before{content:"";width:28px;height:1px;background:var(--gold)}
-  .story-count{font-size:12px;font-weight:500;letter-spacing:.2em;color:rgba(255,255,255,.55);font-variant-numeric:tabular-nums}
-  .story-name{
-    font-size:clamp(40px,12vw,104px);font-weight:700;line-height:.95;letter-spacing:-.02em;color:#fff;
-    text-transform:uppercase;
-  }
-  .story-code{display:flex;align-items:center;gap:12px;font-size:clamp(14px,3.8vw,18px);font-weight:500;letter-spacing:.14em;color:rgba(255,255,255,.82)}
-  .story-code .chip{width:22px;height:22px;border-radius:50%;background:var(--c,#999);box-shadow:inset 0 0 0 1px rgba(255,255,255,.35)}
-  .story-copy .swap{transition:opacity .35s ease, transform .45s var(--ease)}
-  .story-copy.out .swap{opacity:0;transform:translateY(10px)}
-
-  .story-dots{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
-  .story-dots button{
-    width:26px;height:26px;border-radius:50%;border:0;padding:0;cursor:pointer;background:var(--c);
-    box-shadow:inset 0 0 0 1px rgba(255,255,255,.28);transform:scale(.72);transition:transform .3s var(--ease),box-shadow .3s;
-  }
-  .story-dots button[aria-current="true"]{transform:scale(1);box-shadow:inset 0 0 0 1px rgba(255,255,255,.5),0 0 0 2px #0b0d13,0 0 0 3px rgba(255,255,255,.75)}
-  .story-dots button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-
-  .story-loading{position:absolute;z-index:3;left:50%;top:50%;transform:translate(-50%,-50%);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.5);transition:opacity .4s}
-  .story.ready .story-loading{opacity:0}
-  .story-note{position:absolute;z-index:2;right:var(--gutter);top:max(18px,env(safe-area-inset-top));font-size:10px;letter-spacing:.06em;color:rgba(255,255,255,.4);max-width:260px;text-align:right}
-
-  .story-stage::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
-    background:linear-gradient(180deg,transparent 55%,rgba(5,6,8,.55) 78%,rgba(5,6,8,.85) 100%)}
-  @media (min-width:900px){
-    .story canvas{-webkit-mask-image:none;mask-image:none}
-    .story-stage::after{background:linear-gradient(90deg,transparent 42%,rgba(5,6,8,.55) 62%,rgba(5,6,8,.8) 100%)}
-    .story-copy{left:auto;right:clamp(40px,6vw,110px);bottom:auto;top:50%;transform:translateY(-50%);width:min(36vw,520px);align-items:flex-start}
-    .story-name{font-size:clamp(56px,6.4vw,112px)}
-  }
-
-  /* ---------- Chamada final ---------- */
-  .cta{position:relative;background:linear-gradient(180deg,#07090f 0%, var(--navy-deep) 30%);padding:clamp(64px,12vh,120px) var(--gutter) max(28px,env(safe-area-inset-bottom))}
-  .cta-inner{width:min(100%,860px);margin:0 auto;display:flex;flex-direction:column;gap:clamp(24px,4vh,40px)}
-  .cta h2{font-size:clamp(28px,7vw,48px);font-weight:700;line-height:1.05;letter-spacing:-.01em}
-  .cta h2 em{font-style:normal;color:var(--gold)}
-  .cta .lead{color:var(--muted);font-size:15px;margin-top:10px}
-  .cta-actions{display:grid;gap:14px}
-  .cta-actions .wa .label small{opacity:.6}
-  .cta .address{margin-top:0}
-  .cta-foot{display:flex;flex-direction:column;gap:14px;align-items:center;padding-top:28px;border-top:1px solid var(--hair);text-align:center}
-  .cta-foot img{width:180px;height:auto;opacity:.9}
-  .cta-foot p{font-size:11px;line-height:1.5;color:rgba(255,255,255,.45);max-width:520px}
-  @media (min-width:768px){ .cta-actions{grid-template-columns:1fr 1fr} .cta .address{display:block} .cta .map{width:100%} }
-</style>
+<link rel="stylesheet" href="css/estilo.css">
 </head>
 <body>
+
+<!-- ============ TOPO FIXO (aparece depois do hero) ============ -->
+<header class="topbar" aria-label="Navegação">
+  <a href="#inicio" class="topbar-logo" aria-label="Eliti Color — voltar ao início">
+    <picture><source srcset="assets/logo-eliticolor.webp" type="image/webp"><img src="assets/logo-eliticolor.png" width="1200" height="234" alt="Eliti Color"></picture>
+  </a>
+  <nav class="topbar-nav">
+    <a href="#cores">Cores</a>
+    <a href="#obras">Obras</a>
+    <a href="#contato">Contato</a>
+  </nav>
+  <a href="#selecao" class="topbar-sel">Seleção <span class="pill js-count">0</span></a>
+</header>
+
 <main>
+<!-- ============ 1. HERO ============ -->
 <section class="stage" id="inicio">
   <div class="media" aria-hidden="true">
-    <video autoplay muted loop playsinline preload="auto" poster="assets/eliticolor-poster.jpg" disablepictureinpicture>
+    <video autoplay muted loop playsinline preload="metadata" poster="assets/eliticolor-poster.jpg" disablepictureinpicture>
       <source src="assets/eliticolor-bg.webm" type="video/webm">
       <source src="assets/eliticolor-bg.mp4" type="video/mp4">
     </video>
   </div>
   <div class="shade"></div>
 
-  <div class="content">
-    <header class="brand">
-      <h1>
-        <picture>
-          <source srcset="assets/logo-eliticolor.webp" type="image/webp">
-          <img src="assets/logo-eliticolor.png" width="1200" height="234" alt="Eliti Color — Centro de Pinturas">
-        </picture>
-      </h1>
-      <p class="tagline"><span class="t1">Tudo o que você precisa em</span><span class="t2">tintas <em>imobiliárias</em><br> e <em>industriais</em></span></p>
-      <a class="scroll-cue" href="#cores">Role e veja as cores <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
+  <div class="hero">
+    <h1 class="hero-logo">
+      <picture>
+        <source srcset="assets/logo-eliticolor.webp" type="image/webp">
+        <img src="assets/logo-eliticolor.png" width="1200" height="234" alt="Eliti Color — Centro de Pinturas">
+      </picture>
+    </h1>
+    <p class="tagline"><span class="t1">Tudo o que você precisa em</span><span class="t2">tintas <em>imobiliárias</em><br> e <em>industriais</em></span></p>
+    <p class="hero-lead">Escolha suas cores no catálogo e peça o orçamento direto pelo WhatsApp.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-gold" href="#cores">Ver catálogo de cores
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
+      <a class="btn btn-ghost" href="#contato">Falar com um atendente</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2. CATÁLOGO DE CORES + 3. RESUMO DA SELEÇÃO ============ -->
+<section class="section catalogo" id="cores" aria-labelledby="t-cores">
+  <div class="wrap">
+    <header class="sec-head rv">
+      <span class="eyebrow">Coral · disponível na Eliti Color</span>
+      <h2 class="h2" id="t-cores">Catálogo de cores</h2>
+      <p class="lead">Adicione as cores que você quer à sua seleção e envie o pedido de orçamento ao atendente pelo WhatsApp.</p>
     </header>
 
-    <div class="info">
-      <section aria-labelledby="t-contato">
-        <h2 class="eyebrow reveal" id="t-contato">Atendimento</h2>
+    <div class="cat-layout">
+      <div class="cat-main">
+        <ul class="grid-cores" id="gridCores"></ul>
+        <p class="note rv">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+          As cores exibidas são uma referência e podem variar conforme a tela do seu aparelho. Confira a amostra na loja antes de comprar.
+        </p>
 
-        <ul class="contacts">
-          <li class="contact reveal">
-            <div class="who"><span class="name">Tiago</span></div>
-            <a class="num" href="tel:+5544991113969" aria-label="Ligar para Tiago: (44) 99111-3969">(44) 99111-3969</a>
-            <a class="wa" href="https://wa.me/5544991113969" target="_blank" rel="noopener" aria-label="Conversar com Tiago no WhatsApp">
-              <span class="seal"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3c-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4.1 1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2Z"/></svg></span>
-              <span class="label"><small>WhatsApp</small>Conversar com Tiago</span>
-              <span class="arrow"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-            </a>
-          </li>
-          <li class="contact reveal">
-            <div class="who"><span class="name">Eliel</span></div>
-            <a class="num" href="tel:+5544998130641" aria-label="Ligar para Eliel: (44) 99813-0641">(44) 99813-0641</a>
-            <a class="wa" href="https://wa.me/5544998130641" target="_blank" rel="noopener" aria-label="Conversar com Eliel no WhatsApp">
-              <span class="seal"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3c-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4.1 1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2Z"/></svg></span>
-              <span class="label"><small>WhatsApp</small>Conversar com Eliel</span>
-              <span class="arrow"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-            </a>
-          </li>
-        </ul>
-      </section>
+        <div id="blocoProdutos" class="bloco-produtos" hidden>
+          <h3 class="h3">Produtos</h3>
+          <ul class="grid-cores" id="gridProdutos"></ul>
+        </div>
 
-      <address class="address reveal">
-        <a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Rua+Minas+Gerais%2C+894%2C+Centro" target="_blank" rel="noopener" aria-label="Abrir endereço no Google Maps: R. Minas Gerais, 894 - Centro">
-          <span class="seal"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.1 7-11.5A7 7 0 0 0 5 9.5C5 14.9 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
-          <span class="label"><small>Como chegar</small><strong>R. Minas Gerais, 894</strong><span class="sub">Centro · Ver no mapa</span></span>
+        <noscript><p class="note">Para montar sua seleção, ative o JavaScript ou fale direto com a loja na seção de contato abaixo.</p></noscript>
+      </div>
+
+      <!-- Resumo da seleção: painel lateral (computador) / barra inferior (celular) -->
+      <aside class="sel" id="selecao" aria-labelledby="t-sel">
+        <button type="button" class="sel-bar" id="selToggle" aria-expanded="false" aria-controls="selCorpo">
+          <span class="sel-bar-dots" id="selBarDots" aria-hidden="true"></span>
+          <span class="sel-bar-txt"><strong class="js-count-txt">Nenhuma cor ainda</strong><small class="js-bar-sub">Ver seleção</small></span>
+          <svg class="chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg>
+        </button>
+        <span id="selBar" class="sel-bar-pulse" aria-hidden="true"></span>
+
+        <div class="sel-corpo" id="selCorpo">
+          <div class="sel-head">
+            <h2 class="sel-title" id="t-sel">Sua seleção <span class="pill js-count">0</span></h2>
+            <button type="button" class="sel-fechar" id="selFechar" aria-label="Fechar seleção">
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            </button>
+          </div>
+
+          <p class="sel-vazio" id="selVazio">Nenhuma cor escolhida ainda. Toque em <strong>“Adicionar à seleção”</strong> nas cores do catálogo.</p>
+          <ul class="sel-lista" id="selLista"></ul>
+          <button type="button" class="sel-limpar" id="selLimpar" hidden>Limpar seleção</button>
+
+          <fieldset class="sel-at">
+            <legend>Enviar para</legend>
+            <div class="at-grid" id="selAtendentes"></div>
+          </fieldset>
+        </div>
+
+        <div class="sel-acao">
+          <a class="btn btn-wa js-orcamento off" target="_blank" rel="noopener" aria-disabled="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3c-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4.1 1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2Z"/></svg>
+            <span class="lbl-full">Pedir orçamento pelo WhatsApp</span><span class="lbl-short" aria-hidden="true">Orçamento</span>
+          </a>
+          <p class="sel-hint js-hint">Escolha pelo menos uma cor para pedir o orçamento.</p>
+          <p class="sel-via" aria-live="off">Atendimento com <strong class="js-atendente">Tiago</strong></p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. OBRAS REALIZADAS ============ -->
+<section class="section obras" id="obras" aria-labelledby="t-obras">
+  <div class="wrap">
+    <header class="sec-head rv">
+      <span class="eyebrow">Inspirações</span>
+      <h2 class="h2" id="t-obras">Obras realizadas</h2>
+      <p class="lead" id="obrasNota" hidden>Em breve, fotos e vídeos de obras feitas com a Eliti Color.</p>
+    </header>
+    <ul class="grid-obras" id="gridObras"></ul>
+  </div>
+</section>
+
+<!-- ============ 5. CONTATO / ORÇAMENTO ============ -->
+<section class="section final" id="contato" aria-labelledby="t-contato">
+  <div class="wrap final-wrap">
+    <header class="sec-head rv">
+      <span class="eyebrow">Atendimento</span>
+      <h2 class="h2" id="t-contato">Peça seu <em>orçamento</em></h2>
+      <p class="lead">Monte sua seleção de cores ou fale direto com um atendente.</p>
+      <a class="btn btn-gold btn-sm" href="#cores">Montar minha seleção</a>
+    </header>
+
+    <ul class="contacts rv">
+      <li class="contact">
+        <span class="name">Tiago</span>
+        <a class="num" href="tel:+5544991113969" aria-label="Ligar para Tiago: (44) 99111-3969">(44) 99111-3969</a>
+        <a class="wa" href="https://wa.me/5544991113969" target="_blank" rel="noopener" aria-label="Conversar com Tiago no WhatsApp">
+          <span class="seal"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3c-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4.1 1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2Z"/></svg></span>
+          <span class="label"><small>WhatsApp</small>Conversar com Tiago</span>
           <span class="arrow"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         </a>
-      </address>
-    </div>
-  </div>
-</section>
+      </li>
+      <li class="contact">
+        <span class="name">Eliel</span>
+        <a class="num" href="tel:+5544998130641" aria-label="Ligar para Eliel: (44) 99813-0641">(44) 99813-0641</a>
+        <a class="wa" href="https://wa.me/5544998130641" target="_blank" rel="noopener" aria-label="Conversar com Eliel no WhatsApp">
+          <span class="seal"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3c-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4.1 1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2Z"/></svg></span>
+          <span class="label"><small>WhatsApp</small>Conversar com Eliel</span>
+          <span class="arrow"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+      </li>
+    </ul>
 
-<!-- ============ COLEÇÃO DE CORES (scroll) ============ -->
-<section class="story" id="cores" aria-label="Coleção de cores Coral disponível na Eliti Color">
-  <div class="story-stage">
-    <div class="story-glow"></div>
-    <canvas id="paintCanvas" aria-hidden="true"></canvas>
-    <div class="story-loading">Carregando cores…</div>
-    <div class="story-copy" id="storyCopy">
-      <span class="story-eyebrow">Coleção de cores Coral</span>
-      <span class="story-count swap" id="storyCount">01 / 09</span>
-      <h2 class="story-name swap" id="storyName">Algodão Egípcio</h2>
-      <p class="story-code swap"><span class="chip" id="storyChip"></span><span id="storyCode">CORAL 1036-2</span></p>
-      <nav class="story-dots" id="storyDots" aria-label="Escolher cor"></nav>
-    </div>
-  </div>
-</section>
-
-<!-- ============ CHAMADA FINAL ============ -->
-<section class="cta" id="contato" aria-labelledby="t-cta">
-  <div class="cta-inner">
-    <div>
-      <h2 id="t-cta">Gostou de alguma cor? <em>Fale com a gente.</em></h2>
-      <p class="lead">Atendimento direto pelo WhatsApp.</p>
-    </div>
-    <div class="cta-actions">
-      <a class="wa" href="https://wa.me/5544991113969" target="_blank" rel="noopener" aria-label="Conversar com Tiago no WhatsApp">
-        <span class="seal"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3c-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4.1 1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2Z"/></svg></span>
-        <span class="label"><small>WhatsApp · (44) 99111-3969</small>Conversar com Tiago</span>
-        <span class="arrow"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-      </a>
-      <a class="wa" href="https://wa.me/5544998130641" target="_blank" rel="noopener" aria-label="Conversar com Eliel no WhatsApp">
-        <span class="seal"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3c-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4.1 1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2Z"/></svg></span>
-        <span class="label"><small>WhatsApp · (44) 99813-0641</small>Conversar com Eliel</span>
-        <span class="arrow"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-      </a>
-    </div>
-    <address class="address">
+    <address class="address rv">
       <a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Rua+Minas+Gerais%2C+894%2C+Centro" target="_blank" rel="noopener" aria-label="Abrir endereço no Google Maps: R. Minas Gerais, 894 - Centro">
         <span class="seal"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.1 7-11.5A7 7 0 0 0 5 9.5C5 14.9 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
         <span class="label"><small>Como chegar</small><strong>R. Minas Gerais, 894</strong><span class="sub">Centro · Ver no mapa</span></span>
         <span class="arrow"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
     </address>
-    <footer class="cta-foot">
+
+    <footer class="rodape">
       <picture><source srcset="assets/logo-eliticolor.webp" type="image/webp"><img src="assets/logo-eliticolor.png" width="1200" height="234" alt="Eliti Color — Centro de Pinturas" loading="lazy"></picture>
-      <p>Revenda autorizada Coral. As cores exibidas na tela são aproximadas e podem variar conforme o monitor; confira a cor na loja antes de comprar.</p>
+      <p>Revendedor Coral. As cores exibidas na tela são aproximadas; confira a amostra na loja antes de comprar.</p>
     </footer>
   </div>
 </section>
 </main>
 
-<script>
-  // Reforça o autoplay mudo; se o navegador bloquear, fica a imagem de fallback.
-  (function(){
-    var v = document.querySelector(".media video");
-    if (!v) return;
-    if (matchMedia("(prefers-reduced-motion: reduce)").matches){ v.removeAttribute("autoplay"); v.pause(); return; }
-    v.muted = true;
-    var p = v.play(); if (p && p.catch) p.catch(function(){});
-  })();
-</script>
+<!-- Modal de vídeo das obras (sem som automático) -->
+<dialog class="modal" id="modal" aria-label="Vídeo da obra">
+  <button type="button" class="modal-x" id="modalClose" aria-label="Fechar vídeo">
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <video id="modalVideo" controls playsinline preload="metadata"></video>
+</dialog>
 
-<script>
-/* ===== Coleção de cores: lata despejando tinta, controlada pelo scroll ===== */
-(function(){
-  // PREENCHER/CONFIRMAR: códigos e tons serão confirmados com a loja
-  var CORES = [
-    {nome:"Algodão Egípcio", codigo:"CORAL 1036-2", hex:"#EBE3D6"},
-    {nome:"Ovelha",          codigo:"CORAL 1002-4", hex:"#DED2C1"},
-    {nome:"Areia",           codigo:"CORAL 1376-4", hex:"#BBA384"},
-    {nome:"Crômio",          codigo:"CORAL 2685-4", hex:"#928473"},
-    {nome:"Cenoura",         codigo:"CORAL 2286-4", hex:"#B04A21"},
-    {nome:"Espinafre",       codigo:"CORAL 1958-6", hex:"#2A432C"},
-    {nome:"Oceano",          codigo:"CORAL 2871-6", hex:"#0B3452"},
-    {nome:"Cinza Real",      codigo:"CORAL 7151-4", hex:"#92908E"},
-    {nome:"Elefante",        codigo:"CORAL 2371-4", hex:"#3E3E3E"}
-  ];
-  var N_FRAMES = 60;
-  var story = document.getElementById('cores');
-  var canvas = document.getElementById('paintCanvas');
-  if (!story || !canvas || !canvas.getContext) return;
-  story.style.setProperty('--n', CORES.length);
-  var ctx = canvas.getContext('2d');
-  var off = document.createElement('canvas'), octx = off.getContext('2d');
-  var glow = story.querySelector('.story-glow');
-  var copy = document.getElementById('storyCopy');
-  var elName = document.getElementById('storyName'), elCode = document.getElementById('storyCode');
-  var elCount = document.getElementById('storyCount'), elChip = document.getElementById('storyChip');
-  var dotsWrap = document.getElementById('storyDots');
+<div class="sr-only" id="live" aria-live="polite"></div>
 
-  function hexRgb(h){ h=h.replace('#',''); return [parseInt(h.substr(0,2),16),parseInt(h.substr(2,2),16),parseInt(h.substr(4,2),16)]; }
-  var RGB = CORES.map(function(c){ return hexRgb(c.hex); });
-  function lum(c){ return (0.2126*c[0]+0.7152*c[1]+0.0722*c[2])/255; }
-
-  CORES.forEach(function(c,i){
-    var b=document.createElement('button'); b.type='button'; b.style.setProperty('--c',c.hex);
-    b.setAttribute('aria-label','Ver cor '+c.nome);
-    b.addEventListener('click',function(){
-      var top = story.offsetTop + (i+0.5)/CORES.length * (story.offsetHeight - innerHeight);
-      scrollTo({top:top, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
-    });
-    dotsWrap.appendChild(b);
-  });
-  var dots = dotsWrap.querySelectorAll('button');
-
-  var mobile = Math.min(innerWidth, innerHeight) < 700;
-  var dir = 'assets/seq/' + (mobile ? 'm' : 'd') + '/';
-  var frames = new Array(N_FRAMES), loaded = 0;
-  function pad(n){ return ('00'+n).slice(-3); }
-  for (var i=0;i<N_FRAMES;i++){
-    (function(i){
-      var im = new Image(); im.decoding='async';
-      im.onload = function(){ frames[i]=im; loaded++; if (i===0 || loaded===N_FRAMES){ story.classList.add('ready'); request(); } };
-      im.src = dir + pad(i) + '.webp';
-    })(i);
-  }
-
-  var W=0,H=0,dpr=1;
-  function resize(){
-    dpr = Math.min(window.devicePixelRatio||1, 1.75);
-    W = canvas.clientWidth; H = canvas.clientHeight;
-    canvas.width = Math.round(W*dpr); canvas.height = Math.round(H*dpr);
-    request();
-  }
-  // posição do quadro (16:9) no palco
-  function layout(){
-    var portrait = W < 900;
-    if (portrait){
-      var h = H*0.66, w = h*16/9;
-      return {x: W*0.62 - w*0.62, y: -H*0.02, w:w, h:h};      // jato de tinta perto do centro
-    }
-    var h2 = H*1.04, w2 = h2*16/9;
-    return {x: W*0.30 - w2*0.62, y: -H*0.02, w:w2, h:h2};       // jato à esquerda, texto à direita
-  }
-
-  var lastIdx = -1, ticking = false;
-  function request(){ if(!ticking){ ticking=true; requestAnimationFrame(draw); } }
-  addEventListener('scroll', request, {passive:true});
-  addEventListener('resize', resize);
-
-  function progress(){
-    var r = story.getBoundingClientRect();
-    var total = story.offsetHeight - innerHeight;
-    return Math.min(1, Math.max(0, -r.top / total));
-  }
-
-  function setCopy(idx){
-    if (idx===lastIdx) return;
-    var first = lastIdx===-1; lastIdx = idx;
-    var c = CORES[idx];
-    var apply = function(){
-      elName.textContent = c.nome; elCode.textContent = c.codigo;
-      elCount.textContent = pad(idx+1).slice(-2) + ' / ' + pad(CORES.length).slice(-2);
-      elChip.style.setProperty('--c', c.hex);
-      dots.forEach(function(d,k){ d.setAttribute('aria-current', k===idx ? 'true':'false'); });
-      copy.classList.remove('out');
-    };
-    if (first) apply(); else { copy.classList.add('out'); setTimeout(apply, 220); }
-  }
-
-  function draw(){
-    ticking = false;
-    if (!W) resize();
-    var p = progress();
-    // cor: uma faixa por cor, com transição suave no fim de cada faixa
-    var seg = p * CORES.length, idx = Math.min(CORES.length-1, Math.floor(seg)), t = seg - idx;
-    var a = RGB[idx], b = RGB[Math.min(CORES.length-1, idx+1)];
-    var k = idx < CORES.length-1 ? Math.max(0, (t-0.72)/0.28) : 0;
-    k = k*k*(3-2*k);
-    var col = [0,1,2].map(function(j){ return Math.round(a[j] + (b[j]-a[j])*k); });
-    setCopy(k > 0.5 ? Math.min(CORES.length-1, idx+1) : idx);
-
-    // brilho atrás do jato: mais forte para cores escuras
-    var L = lum(col), ga = L < 0.25 ? 0.30 : L < 0.5 ? 0.18 : 0.10;
-    glow.style.setProperty('--glow', 'rgba('+Math.round(160+col[0]*0.37)+','+Math.round(160+col[1]*0.37)+','+Math.round(160+col[2]*0.37)+','+ga+')');
-
-    // quadro do vídeo conforme o scroll
-    var fi = Math.min(N_FRAMES-1, Math.round(p*(N_FRAMES-1)));
-    var im = frames[fi];
-    if (!im){ for (var s=fi; s>=0; s--) if (frames[s]) { im=frames[s]; break; } }
-    ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,canvas.width,canvas.height);
-    if (!im) return;
-    var L2 = layout(), sw = im.naturalWidth, sh = im.naturalHeight/2;
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-    ctx.globalCompositeOperation='source-over';
-    ctx.drawImage(im, 0,0,sw,sh, L2.x,L2.y,L2.w,L2.h);                 // lata (desfocada)
-
-    var ow = Math.round(L2.w*dpr), oh = Math.round(L2.h*dpr);
-    if (off.width!==ow || off.height!==oh){ off.width=ow; off.height=oh; }
-    octx.globalCompositeOperation='source-over';
-    octx.fillStyle='rgb('+col.join(',')+')'; octx.fillRect(0,0,ow,oh);
-    octx.globalCompositeOperation='hard-light';                       // aplica a cor mantendo brilho e sombra
-    octx.drawImage(im, 0,sh,sw,sh, 0,0,ow,oh);
-    octx.globalCompositeOperation='destination-in';                   // só onde há tinta
-    octx.drawImage(im, 0,sh,sw,sh, 0,0,ow,oh);
-    ctx.setTransform(1,0,0,1,0,0);
-    ctx.drawImage(off, Math.round(L2.x*dpr), Math.round(L2.y*dpr));
-  }
-  resize();
-})();
-</script>
+<script src="js/dados.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>

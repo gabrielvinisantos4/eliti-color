@@ -1,17 +1,24 @@
-ELITI COLOR — Landing page
+ELITI COLOR — Catálogo interativo
+=================================
 
-Para publicar: suba a pasta inteira (index.html + assets/) em qualquer hospedagem estática
-(Vercel, Netlify, Hostinger, GitHub Pages). Não há build nem dependências.
+Estrutura
+  index.html        estrutura da página (hero, catálogo, seleção, obras, contato)
+  css/estilo.css    visual e animações
+  js/dados.js       >>> ÚNICO ARQUIVO PARA CADASTRAR CONTEÚDO <<<
+  js/app.js         lógica (catálogo, seleção, WhatsApp, galeria) — não precisa editar
+  assets/           logo, vídeo de fundo e imagens
 
-Contatos (no index.html, seção "contacts"):
-  Tiago  (44) 99111-3969  -> https://wa.me/5544991113969
-  Eliel  (44) 99813-0641  -> https://wa.me/5544998130641
-Endereço: R. Minas Gerais, 894 - Centro -> link de busca no Google Maps
+Onde cadastrar (tudo em js/dados.js)
+  Cores     -> lista "cores":     { id, nome, codigo, hex }
+  Produtos  -> lista "produtos":  { id, nome, codigo, marca, descricao, imagem }
+               (a seção "Produtos" só aparece quando houver item cadastrado)
+  Obras     -> lista "obras":     { titulo, local, tipo, imagem, video }
+               (coloque os arquivos em assets/obras/; enquanto a lista estiver
+               vazia, a galeria mostra espaços reservados neutros)
+  Atendentes-> lista "atendentes": { id, nome, whatsapp (55+DDD+número), telefone }
+  Mensagem do WhatsApp -> bloco "mensagem"
 
-Depois de publicar: troque o og:image no <head> pela URL absoluta da imagem.
-Para o mapa cair no pin exato, substitua o link do endereço pelo link "Compartilhar" do Google Maps da loja.
-
-Arquivos:
-  assets/eliticolor-bg.webm / .mp4  vídeo de fundo (loop sem corte, sem áudio)
-  assets/eliticolor-poster.jpg      imagem de fallback
-  assets/logo-eliticolor.webp/.png  logo original (apenas recorte das bordas transparentes)
+Pendências
+  - Confirmar com a loja os códigos e os tons (hex) das 9 cores Coral.
+  - Adicionar fotos/vídeos reais de obras em assets/obras/ e cadastrar em "obras".
+  - Link do mapa: informar a cidade ou o link "Compartilhar" do Google Maps.
