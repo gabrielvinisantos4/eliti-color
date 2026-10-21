@@ -444,22 +444,36 @@
     var box = $("#logoAnim"); if (!box || reduce) return;
     var img = $(".logo-anim-img", box);
     var ua = navigator.userAgent;
-    var safari = /^((?!chrome|chromium|crios|fxios|android|edg).)*safari/i.test(ua);
-    if (safari) {
-      // Safari não mostra transparência em WebM: usa WebP animado (toca uma vez)
+    // no iPhone/iPad todo navegador usa o motor do Safari (sem transparência em WebM)
+    var ios = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    var safari = /^((?!chrome|chromium|android|edg|firefox).)*safari/i.test(ua);
+    function usarWebp() {
       var anim = new Image();
       anim.onload = function () { img.src = anim.src; };
       anim.src = "assets/logo-animada.webp";
-      return;
     }
+    if (ios || safari) { usarWebp(); return; }
     var v = document.createElement("video");
     v.muted = true; v.defaultMuted = true; v.playsInline = true; v.setAttribute("playsinline", ""); v.setAttribute("muted", "");
     v.preload = "auto"; v.setAttribute("aria-hidden", "true");
     v.src = "assets/logo-animada.webm";
-    v.addEventListener("playing", function () { box.classList.add("tocando"); });
-    v.addEventListener("error", function () { box.classList.remove("tocando"); });
+    var desistiu = false;
+    function desistir() { if (desistiu) return; desistiu = true; box.classList.remove("tocando"); if (v.parentNode) v.parentNode.removeChild(v); usarWebp(); }
+    // só mostra o vídeo depois de confirmar que o canto dele é transparente
+    v.addEventListener("playing", function () {
+      if (desistiu) return;
+      try {
+        var c = document.createElement("canvas"); c.width = 8; c.height = 8;
+        var cx = c.getContext("2d"); cx.drawImage(v, 0, 0, 40, 40, 0, 0, 8, 8);
+        var d = cx.getImageData(0, 0, 8, 8).data, opaco = 0;
+        for (var i = 3; i < d.length; i += 4) if (d[i] > 200) opaco++;
+        if (opaco > 8) { desistir(); return; }
+      } catch (e) { desistir(); return; }
+      box.classList.add("tocando");
+    });
+    v.addEventListener("error", desistir);
     box.appendChild(v);
-    var p = v.play(); if (p && p.catch) p.catch(function () { box.classList.remove("tocando"); });
+    var p = v.play(); if (p && p.catch) p.catch(function () { desistir(); });
     // passar o mouse na logo toca de novo
     var ultima = 0;
     box.addEventListener("mouseenter", function () {
