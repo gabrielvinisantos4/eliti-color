@@ -336,33 +336,38 @@
     });
 
     function carregar(src) { return new Promise(function (ok, erro) { var im = new Image(); im.onload = function () { ok(im); }; im.onerror = erro; im.src = src; }); }
+    var parede = null;
     function preparar() {
-      return Promise.all([img.complete && img.naturalWidth ? img : carregar(img.currentSrc || img.src), carregar("assets/simulador/mascara.webp")]).then(function (r) {
+      return Promise.all([img.complete && img.naturalWidth ? img : carregar(img.currentSrc || img.src), carregar("assets/simulador/mascara.webp"), carregar("assets/simulador/parede.webp")]).then(function (r) {
         var t = document.createElement("canvas"); t.width = W; t.height = H; var tc = t.getContext("2d", { willReadFrequently: true });
         tc.drawImage(r[0], 0, 0, W, H); base = tc.getImageData(0, 0, W, H).data;
+        tc.clearRect(0, 0, W, H); tc.drawImage(r[2], 0, 0, W, H); parede = tc.getImageData(0, 0, W, H).data;
         tc.clearRect(0, 0, W, H); tc.drawImage(r[1], 0, 0, W, H); var m = tc.getImageData(0, 0, W, H).data;
-        mask = new Float32Array(W * H); var soma = [0, 0, 0], n = 0, lums = [];
+        mask = new Float32Array(W * H); var lums = [];
         for (var p = 0, q = 0; p < mask.length; p++, q += 4) {
-          var a = m[q] / 255; mask[p] = a;
-          if (a > 0.98) lums.push(toLin[base[q]] * 0.2126 + toLin[base[q + 1]] * 0.7152 + toLin[base[q + 2]] * 0.0722);
+          var a = m[q] / 255; mask[p] = a < 0.004 ? 0 : a;
+          if (a > 0.98 && (p & 3) === 0) lums.push(toLin[parede[q]] * 0.2126 + toLin[parede[q + 1]] * 0.7152 + toLin[parede[q + 2]] * 0.0722);
         }
-        // branco de referência = luz típica da parede (mediana), para a cor sair fiel onde a luz é "normal"
+        // branco de referência = luz típica da parede, para a cor sair fiel onde a luz é "normal"
         lums.sort(function (a, b) { return a - b; });
-        var med = lums[Math.floor(lums.length * 0.55)] || 0.7;
-        for (var p2 = 0, q2 = 0; p2 < mask.length; p2 += 7, q2 += 28) {
-          if (mask[p2] > 0.98) { var L = toLin[base[q2]] * 0.2126 + toLin[base[q2 + 1]] * 0.7152 + toLin[base[q2 + 2]] * 0.0722; if (Math.abs(L - med) < med * 0.08) { soma[0] += toLin[base[q2]]; soma[1] += toLin[base[q2 + 1]]; soma[2] += toLin[base[q2 + 2]]; n++; } }
+        var med = lums[Math.floor(lums.length * 0.55)] || 0.7, soma = [0, 0, 0], n = 0;
+        for (var p2 = 0, q2 = 0; p2 < mask.length; p2 += 5, q2 += 20) {
+          if (mask[p2] > 0.98) { var L = toLin[parede[q2]] * 0.2126 + toLin[parede[q2 + 1]] * 0.7152 + toLin[parede[q2 + 2]] * 0.0722; if (Math.abs(L - med) < med * 0.08) { soma[0] += toLin[parede[q2]]; soma[1] += toLin[parede[q2 + 1]]; soma[2] += toLin[parede[q2 + 2]]; n++; } }
         }
         ref = n ? [soma[0] / n, soma[1] / n, soma[2] / n] : [med, med, med];
       });
     }
+    // foto + alfa * (parede pintada - parede original): bordas finas (capim, tecido) ficam corretas
     function pintar(destino, hex) {
       var c = hexLin(hex), k0 = c[0] / ref[0], k1 = c[1] / ref[1], k2 = c[2] / ref[2];
       var dc = destino.getContext("2d"), out = dc.createImageData(W, H), o = out.data;
       for (var p = 0, q = 0; p < mask.length; p++, q += 4) {
         var a = mask[p], r = base[q], g = base[q + 1], b = base[q + 2];
         if (a > 0) {
-          var nr = LUT[Math.min(4096, (toLin[r] * k0 * 2048) | 0)], ng = LUT[Math.min(4096, (toLin[g] * k1 * 2048) | 0)], nb = LUT[Math.min(4096, (toLin[b] * k2 * 2048) | 0)];
-          r = r + (nr - r) * a; g = g + (ng - g) * a; b = b + (nb - b) * a;
+          var pr = parede[q], pg = parede[q + 1], pb = parede[q + 2];
+          r += a * (LUT[Math.min(4096, (toLin[pr] * k0 * 2048) | 0)] - pr);
+          g += a * (LUT[Math.min(4096, (toLin[pg] * k1 * 2048) | 0)] - pg);
+          b += a * (LUT[Math.min(4096, (toLin[pb] * k2 * 2048) | 0)] - pb);
         }
         o[q] = r; o[q + 1] = g; o[q + 2] = b; o[q + 3] = 255;
       }
