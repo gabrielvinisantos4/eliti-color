@@ -102,13 +102,23 @@
     OBRAS.forEach(function (o, i) {
       var meta = [o.local, o.tipo].filter(Boolean).map(esc).join(" · ");
       var li = el("li", { class: "obra rv", style: "--d:" + (i % 3) * 80 + "ms" });
-      var media = o.imagem ? '<img src="' + esc(o.imagem) + '" alt="' + esc(o.titulo || "Obra realizada pela Eliti Color") + '" loading="lazy" decoding="async">' : '<span class="obra-noimg"></span>';
-      li.innerHTML = o.video
+      var media = o.imagem ? '<img src="' + esc(o.imagem) + '" alt="' + esc(o.titulo || ("Obra da Eliti Color" + (o.local ? " — " + o.local : "") + (o.tipo ? " (" + o.tipo.toLowerCase() + ")" : ""))) + '" loading="lazy" decoding="async">' : '<span class="obra-noimg"></span>';
+      var alt = "Obra da Eliti Color" + (o.local ? " — " + o.local : "") + (o.tipo ? " (" + o.tipo.toLowerCase() + ")" : "");
+      if (o.antes && o.depois) {
+        li.className += " obra-ad";
+        li.innerHTML = '<div class="obra-media ad">' +
+          '<figure><img src="' + esc(o.antes) + '" alt="' + esc(alt + ": antes") + '" loading="lazy" decoding="async"><figcaption>Antes</figcaption></figure>' +
+          '<figure><img src="' + esc(o.depois) + '" alt="' + esc(alt + ": depois") + '" loading="lazy" decoding="async"><figcaption class="dep">Depois</figcaption></figure></div>';
+      } else li.innerHTML = o.video
         ? '<button type="button" class="obra-media" data-video="' + esc(o.video) + '" data-poster="' + esc(o.imagem || "") + '" aria-label="Assistir vídeo' + (o.titulo ? ": " + esc(o.titulo) : "") + '">' + media + '<span class="obra-play">' + PLAY + '</span></button>'
         : '<div class="obra-media">' + media + '</div>';
       if (o.titulo || meta) li.innerHTML += '<div class="obra-info">' + (o.titulo ? '<h3>' + esc(o.titulo) + '</h3>' : '') + (meta ? '<p>' + meta + '</p>' : '') + '</div>';
       gridObras.appendChild(li);
     });
+    // no computador (3 colunas) a última linha não fica com buraco: o último card ocupa o espaço que sobra
+    var nota = $("#obrasNota"); nota.textContent = "Obras concluídas, em andamento e o antes e depois de fachadas."; nota.hidden = false;
+    var cel = OBRAS.reduce(function (n, o) { return n + (o.antes && o.depois ? 2 : 1); }, 0);
+    if (cel % 3 === 2 && !(OBRAS[OBRAS.length - 1].antes)) gridObras.lastElementChild.classList.add("largo");
   } else {
     // Espaços reservados: NÃO são obras reais. Somem quando houver itens em ELITI.obras.
     for (var k = 0; k < 6; k++) {

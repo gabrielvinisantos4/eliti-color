@@ -80,14 +80,25 @@ window.ELITI = {
     /* Para um novo catálogo, copie um bloco acima, troque id/marca/titulo e cadastre os itens. */
   ],
 
-  /* ---------------- OBRAS REALIZADAS (opcional) ----------------
-     Enquanto a lista estiver vazia, a galeria mostra espaços reservados
-     neutros. Use somente fotos/vídeos reais de obras da Eliti Color.
-     Campos (todos opcionais, mas informe "imagem" e/ou "video"):
-       titulo, local, tipo, imagem ("assets/obras/obra-01.webp"), video ("assets/obras/obra-01.mp4")
-     Exemplo de formato:
-     { titulo: "", local: "", tipo: "", imagem: "assets/obras/obra-01.webp", video: "" }  */
-  obras: [],
+  /* ---------------- OBRAS REALIZADAS ----------------
+     Use somente fotos/vídeos reais de obras da Eliti Color.
+     Campos (todos opcionais):
+       titulo, local, tipo   : textos do card (ex.: tipo "Em andamento")
+       imagem                : foto ("assets/obras/obra.webp"); em vídeo, é a capa
+       video                 : vídeo mp4 sem áudio ("assets/obras/obra.mp4")
+       antes, depois         : par de fotos para card de antes e depois
+     A ordem da lista é a ordem na página.                                    */
+  obras: [
+    { tipo: "Antes e depois", local: "Jardim Olinda", antes: "assets/obras/jardim-olinda-antes.webp", depois: "assets/obras/jardim-olinda-depois.webp" },
+    { tipo: "Em andamento", video: "assets/obras/obra-andamento-sobrado.mp4", imagem: "assets/obras/obra-andamento-sobrado.webp" },
+    { tipo: "Antes e depois", antes: "assets/obras/fachada-antes.webp", depois: "assets/obras/fachada-depois.webp" },
+    { tipo: "Obra concluída", imagem: "assets/obras/obra-casa-telhado-1.webp" },
+    { tipo: "Fachada", local: "Paranapoema", video: "assets/obras/obra-paranapoema.mp4", imagem: "assets/obras/obra-paranapoema.webp" },
+    { tipo: "Obra concluída", imagem: "assets/obras/obra-157.webp" },
+    { tipo: "Em andamento", imagem: "assets/obras/obra-andamento-fachada-pedra.webp" },
+    { tipo: "Em andamento", imagem: "assets/obras/obra-1529.webp" },
+    { tipo: "Obra concluída", imagem: "assets/obras/obra-casa-telhado-2.webp" }
+  ],
 
   /* ---------------- MENSAGEM DO WHATSAPP ---------------- */
   mensagem: {
