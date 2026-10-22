@@ -234,7 +234,29 @@ ul{list-style:none}
 .marca-coral{background:#13286b}
 .marca-mercure{background:#9b1b25}
 .cor-swatch .marca-tag{position:absolute;z-index:1;top:10px;left:10px}
-.cor-lata{position:absolute;z-index:1;right:6%;bottom:-4%;height:78%;width:auto;filter:drop-shadow(0 10px 14px rgba(0,0,0,.35))}
+.cor-lata{position:absolute;z-index:1;right:6%;bottom:-4%;height:78%;width:auto;filter:drop-shadow(0 10px 14px rgba(0,0,0,.35));
+  transform-origin:50% 90%;transition:transform .6s cubic-bezier(.2,.8,.2,1),filter .6s}
+/* sombra no "chão" embaixo da lata: diminui quando a lata sobe */
+.lata-sombra{position:absolute;z-index:1;right:11%;bottom:1.5%;width:41%;height:7%;border-radius:50%;pointer-events:none;
+  background:radial-gradient(closest-side,rgba(0,0,0,.42),rgba(0,0,0,0));transition:transform .6s cubic-bezier(.2,.8,.2,1),opacity .6s}
+@media (hover:hover){
+  .cor:hover .cor-lata{transform:translateY(-7px) rotate(-1.5deg)}
+  .cor:hover .lata-sombra{transform:scale(.88);opacity:.8}
+}
+@media (prefers-reduced-motion:no-preference){
+  /* escolhida: a lata fica flutuando */
+  .cor.is-sel .cor-lata{animation:flutua 3.4s ease-in-out infinite;filter:drop-shadow(0 22px 18px rgba(0,0,0,.4)) drop-shadow(0 0 18px color-mix(in srgb,var(--c) 55%,transparent))}
+  .cor.is-sel .lata-sombra{animation:sombra 3.4s ease-in-out infinite}
+  /* no clique: pulinho e depois flutua */
+  .cor.is-sel.pulo .cor-lata{animation:pulo .75s cubic-bezier(.3,1.4,.5,1),flutua 3.4s ease-in-out .75s infinite}
+  .cor.is-sel.pulo .lata-sombra{animation:sombra-pulo .75s cubic-bezier(.3,1.4,.5,1),sombra 3.4s ease-in-out .75s infinite}
+  .cor.pousa .cor-lata{animation:pousa .55s cubic-bezier(.3,1.5,.5,1)}
+  @keyframes flutua{0%,100%{transform:translateY(-12px) rotate(-2deg)}50%{transform:translateY(-20px) rotate(1.5deg)}}
+  @keyframes sombra{0%,100%{transform:scale(.8);opacity:.7}50%{transform:scale(.68);opacity:.5}}
+  @keyframes pulo{0%{transform:translateY(0) scale(1,1)}18%{transform:translateY(2px) scale(1.04,.94)}50%{transform:translateY(-30px) rotate(-6deg) scale(.98,1.04)}75%{transform:translateY(-9px) rotate(1deg)}100%{transform:translateY(-12px) rotate(-2deg)}}
+  @keyframes sombra-pulo{0%{transform:scale(1);opacity:1}18%{transform:scale(1.06)}50%{transform:scale(.55);opacity:.4}100%{transform:scale(.8);opacity:.7}}
+  @keyframes pousa{0%{transform:translateY(-14px) rotate(-2deg)}60%{transform:translateY(2px) scale(1.03,.96)}100%{transform:none}}
+}
 .cor-linhas{font-size:11px;color:var(--muted);margin-top:4px}
 .si-marca{font-size:11px!important;font-weight:700;letter-spacing:.14em!important;color:var(--gold)!important}
 

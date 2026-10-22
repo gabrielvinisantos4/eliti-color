@@ -67,7 +67,7 @@
   }
   function card(it, i) {
     var li = el("li", { class: "cor rv" + (it.imagem ? " tem-lata" : "") + (clara(it.hex) ? " cor-clara" : ""), "data-key": it.key, style: "--c:" + (it.hex || "#777") + ";--d:" + (i % 3) * 60 + "ms" });
-    var lata = it.imagem ? '<img class="cor-lata" src="' + esc(it.imagem) + '" alt="' + esc(it.imagemAlt || ("Lata " + it.marca)) + '" loading="lazy" decoding="async" width="180" height="222">' : "";
+    var lata = it.imagem ? '<span class="lata-sombra" aria-hidden="true"></span><img class="cor-lata" src="' + esc(it.imagem) + '" alt="' + esc(it.imagemAlt || ("Lata " + it.marca)) + '" loading="lazy" decoding="async" width="180" height="222">' : "";
     var linhas = it.linhas.length ? '<p class="cor-linhas">' + it.linhas.map(esc).join(" · ") + '</p>' : "";
     li.innerHTML =
       '<div class="cor-swatch"><span class="marca-tag marca-' + esc(it.cat) + '">' + esc(it.marca) + '</span>' + lata + '<span class="cor-check">' + ICON_CHECK + '</span></div>' +
@@ -224,7 +224,12 @@
     var add = e.target.closest && e.target.closest(".add");
     if (add) {
       toggle(add.getAttribute("data-key"));
-      if (!reduce) { add.classList.remove("gota"); void add.offsetWidth; add.classList.add("gota"); }
+      if (!reduce) {
+        add.classList.remove("gota"); void add.offsetWidth; add.classList.add("gota");
+        // a lata dá um pulinho (ao escolher) ou pousa (ao remover)
+        var card = add.closest(".cor");
+        if (card) { card.classList.remove("pulo", "pousa"); void card.offsetWidth; card.classList.add(card.classList.contains("is-sel") ? "pulo" : "pousa"); }
+      }
       return;
     }
     var rm = e.target.closest && e.target.closest("[data-rm]");
