@@ -41,18 +41,18 @@ window.ELITI = {
       titulo: "Coral",
       linha: "Coleção de cores Coral",
       /* CONFIRMAR com a loja: códigos e tons (hex) foram tirados da arte de divulgação
-         "Coleção de cores Coral" enviada pela loja. As latas (Coral Renova) foram
-         recortadas da mesma arte, com autorização. */
+         "Coleção de cores Coral" enviada pela loja. Imagem da lata: Coral Mactra Vedbem Imperall
+         (foto enviada pela loja). */
       itens: [
-        { id: "algodao-egipcio", nome: "Algodão Egípcio", codigo: "1036-2", hex: "#EBE3D6", imagem: "assets/produtos/coral-renova-algodao-egipcio.webp", imagemAlt: "Lata Coral Renova na cor Algodão Egípcio" },
-        { id: "ovelha",          nome: "Ovelha",          codigo: "1002-4", hex: "#DED2C1", imagem: "assets/produtos/coral-renova-ovelha.webp", imagemAlt: "Lata Coral Renova na cor Ovelha" },
-        { id: "areia",           nome: "Areia",           codigo: "1376-4", hex: "#BBA384", imagem: "assets/produtos/coral-renova-areia.webp", imagemAlt: "Lata Coral Renova na cor Areia" },
-        { id: "cromio",          nome: "Crômio",          codigo: "2685-4", hex: "#928473", imagem: "assets/produtos/coral-renova-cromio.webp", imagemAlt: "Lata Coral Renova na cor Crômio" },
-        { id: "cenoura",         nome: "Cenoura",         codigo: "2286-4", hex: "#B04A21", imagem: "assets/produtos/coral-renova-cenoura.webp", imagemAlt: "Lata Coral Renova na cor Cenoura" },
-        { id: "espinafre",       nome: "Espinafre",       codigo: "1958-6", hex: "#2A432C", imagem: "assets/produtos/coral-renova-espinafre.webp", imagemAlt: "Lata Coral Renova na cor Espinafre" },
-        { id: "oceano",          nome: "Oceano",          codigo: "2871-6", hex: "#0B3452", imagem: "assets/produtos/coral-renova-oceano.webp", imagemAlt: "Lata Coral Renova na cor Oceano" },
-        { id: "cinza-real",      nome: "Cinza Real",      codigo: "7151-4", hex: "#92908E", imagem: "assets/produtos/coral-renova-cinza-real.webp", imagemAlt: "Lata Coral Renova na cor Cinza Real" },
-        { id: "elefante",        nome: "Elefante",        codigo: "2371-4", hex: "#3E3E3E", imagem: "assets/produtos/coral-renova-elefante.webp", imagemAlt: "Lata Coral Renova na cor Elefante" }
+        { id: "algodao-egipcio", nome: "Algodão Egípcio", codigo: "1036-2", hex: "#EBE3D6", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
+        { id: "ovelha",          nome: "Ovelha",          codigo: "1002-4", hex: "#DED2C1", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
+        { id: "areia",           nome: "Areia",           codigo: "1376-4", hex: "#BBA384", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
+        { id: "cromio",          nome: "Crômio",          codigo: "2685-4", hex: "#928473", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
+        { id: "cenoura",         nome: "Cenoura",         codigo: "2286-4", hex: "#B04A21", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
+        { id: "espinafre",       nome: "Espinafre",       codigo: "1958-6", hex: "#2A432C", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
+        { id: "oceano",          nome: "Oceano",          codigo: "2871-6", hex: "#0B3452", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
+        { id: "cinza-real",      nome: "Cinza Real",      codigo: "7151-4", hex: "#92908E", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
+        { id: "elefante",        nome: "Elefante",        codigo: "2371-4", hex: "#3E3E3E", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" }
       ]
     },
     {
