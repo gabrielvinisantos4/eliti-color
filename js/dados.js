@@ -40,21 +40,24 @@ window.ELITI = {
       marca: "Mercure",
       titulo: "Mercure",
       linha: "Tinta Acrílica Mercure",
-      /* Fonte: Catálogo Mercure Tintas 2025, página 8 (Acrílicas Premium, Standard e Econômica).
-         O catálogo não traz código para essas cores, então "codigo" fica vazio.
-         O tom (hex) é o da amostra digital do catálogo.
-         Imagem: lata real de Tinta Acrílica Premium, do mesmo catálogo (página 4). */
+      /* Fonte: catálogo Mercure (foto enviada pela loja). Sem código nessas cores.
+         Tons (hex) aproximados a partir da foto. Cinza Real e Marrom Barroco usam como
+         referência de tom as cores Suvinil "Taça Real" e "Beijo Baiano". Papel Picado e
+         Marrom Barroco não aparecem no catálogo, então ficam sem "linhas". */
       itens: [
-        { id: "areia",            nome: "Areia",            hex: "#FCF0DD", linhas: ["Premium", "Standard", "Econômica"], imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
-        { id: "camurca",          nome: "Camurça",          hex: "#E3CEB8", linhas: ["Premium", "Standard", "Econômica"], imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
-        { id: "capuccino",        nome: "Capuccino",        hex: "#C7A468", linhas: ["Premium"],                          imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
-        { id: "terracota",        nome: "Terracota",        hex: "#B06439", linhas: ["Premium"],                          imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
-        { id: "vermelho-intenso", nome: "Vermelho Intenso", hex: "#C7625B", linhas: ["Premium"],                          imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
-        { id: "acafrao",          nome: "Açafrão",          hex: "#EDC863", linhas: ["Premium", "Standard"],              imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
-        { id: "kiwi",             nome: "Kiwi",             hex: "#B7CF8B", linhas: ["Premium", "Standard"],              imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
-        { id: "jade",             nome: "Jade",             hex: "#5A9989", linhas: ["Premium"],                          imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
-        { id: "azul-royal",       nome: "Azul Royal",       hex: "#5C9BD6", linhas: ["Premium"],                          imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
-        { id: "oceano",           nome: "Oceano",           hex: "#465D82", linhas: ["Premium"],                          imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" }
+        { id: "branco", nome: "Branco", hex: "#F2F2F0", linhas: ["Premium", "Standard", "Econômica"], imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
+        { id: "gelo", nome: "Gelo", hex: "#E1DDD6", linhas: ["Premium", "Standard", "Econômica"], imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
+        { id: "algodao-egipcio", nome: "Algodão Egípcio", hex: "#D6D0C4", linhas: ["Premium", "Standard", "Econômica"], imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
+        { id: "cromio", nome: "Crômio", hex: "#D7D6D4", linhas: ["Premium", "Standard", "Econômica"], imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
+        { id: "papel-picado", nome: "Papel Picado", hex: "#D7D3CA", imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
+        { id: "cinza-real", nome: "Cinza Real", hex: "#6E7678", linhas: ["Premium"], imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
+        { id: "espinafre", nome: "Espinafre", hex: "#56634F", linhas: ["Premium"], imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
+        { id: "oceano", nome: "Oceano", hex: "#264A8B", linhas: ["Premium"], imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
+        { id: "elefante", nome: "Elefante", hex: "#868686", linhas: ["Premium", "Standard", "Econômica"], imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
+        { id: "cenoura", nome: "Cenoura", hex: "#CF784D", linhas: ["Premium", "Standard"], imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
+        { id: "terracota", nome: "Terracota", hex: "#7D4434", linhas: ["Premium"], imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
+        { id: "marrom-barroco", nome: "Marrom Barroco", hex: "#6B574E", imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
+        { id: "vermelho-intenso", nome: "Vermelho Intenso", hex: "#834248", linhas: ["Premium"], imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" }
       ]
     },
     {
