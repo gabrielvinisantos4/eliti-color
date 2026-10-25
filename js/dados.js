@@ -52,7 +52,9 @@ window.ELITI = {
         { id: "areia",           nome: "Areia",           codigo: "1376-4", hex: "#D1C4AE", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
         { id: "palha",           nome: "Palha",           hex: "#E0DFC6", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
         { id: "camurca",         nome: "Camurça",         hex: "#928770", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
-        { id: "algodao-egipcio", nome: "Algodão Egípcio", codigo: "1036-2", hex: "#DAD7C6", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" }
+        { id: "algodao-egipcio", nome: "Algodão Egípcio", codigo: "1036-2", hex: "#DAD7C6", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
+        { id: "papel-picado",    nome: "Papel Picado",    hex: "#D7D3CA", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
+        { id: "ovelha",          nome: "Ovelha",          codigo: "1002-4", hex: "#BFBAB4", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" }
       ]
     },
     {
