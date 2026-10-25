@@ -43,6 +43,7 @@ ul{list-style:none}
 .h2{font-size:clamp(32px,7vw,56px);font-weight:700;line-height:1.02;letter-spacing:-.02em;margin:14px 0 12px}
 .h2 em{font-style:normal;color:var(--gold)}
 .h3{font-size:20px;font-weight:700;margin:40px 0 16px}
+.aviso-topo{margin-top:12px;font-size:14px;color:var(--gold);max-width:56ch}
 .lead{color:var(--muted);font-size:clamp(15px,3.8vw,17px);max-width:56ch}
 .pill{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 7px;border-radius:999px;background:var(--gold);color:var(--navy-deep);font-size:12px;font-weight:700;font-variant-numeric:tabular-nums}
 
