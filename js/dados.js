@@ -20,6 +20,11 @@ window.ELITI = {
     { id: "eliel", nome: "Eliel", whatsapp: "5544998130641", telefone: "(44) 99813-0641" }
   ],
 
+  /* ---------------- WHATSAPP DA LOJA (botão "Pedir orçamento") ----------------
+     O pedido de orçamento com as cores escolhidas vai para este número.
+     Os botões de Tiago e Eliel na seção de contato continuam com os números deles. */
+  orcamentoWhatsapp: "5544997519603",
+
   /* ---------------- CATÁLOGOS (um por marca/linha) ----------------
      Cada catálogo vira uma aba no site.
        marca   : nome da marca (aparece no card, na lista e na mensagem)

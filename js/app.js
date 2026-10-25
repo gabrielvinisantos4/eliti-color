@@ -165,7 +165,8 @@
   }
   function linkWhats() {
     var a = ATEND.filter(function (x) { return x.id === state.atendente; })[0] || ATEND[0];
-    return "https://wa.me/" + a.whatsapp + "?text=" + encodeURIComponent(mensagem());
+    var numero = D.orcamentoWhatsapp || a.whatsapp;
+    return "https://wa.me/" + numero + "?text=" + encodeURIComponent(mensagem());
   }
 
   /* ---------- seleção: atualizar interface ---------- */
