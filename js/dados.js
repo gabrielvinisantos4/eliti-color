@@ -55,7 +55,7 @@ window.ELITI = {
         { id: "oceano", nome: "Oceano", hex: "#264A8B", linhas: ["Premium"], imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
         { id: "elefante", nome: "Elefante", hex: "#868686", linhas: ["Premium", "Standard", "Econômica"], imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
         { id: "cenoura", nome: "Cenoura", hex: "#CF784D", linhas: ["Premium", "Standard"], imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
-        { id: "terracota", nome: "Terracota", hex: "#7D4434", linhas: ["Premium"], imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
+        { id: "terracota", nome: "Terracota", hex: "#70412F", linhas: ["Premium"], imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
         { id: "marrom-barroco", nome: "Marrom Barroco", hex: "#6B574E", imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
         { id: "vermelho-intenso", nome: "Vermelho Intenso", hex: "#8D3430", linhas: ["Premium"], imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" }
       ]
