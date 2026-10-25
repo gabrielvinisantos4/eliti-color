@@ -36,28 +36,6 @@ window.ELITI = {
        imagemAlt: descrição da foto (opcional)                                       */
   catalogos: [
     {
-      id: "coral",
-      marca: "Coral",
-      titulo: "Coral",
-      linha: "Coleção de cores Coral",
-      /* CONFIRMAR com a loja: códigos e tons (hex) foram tirados da arte de divulgação
-         "Coleção de cores Coral" enviada pela loja. Imagem da lata: Coral Mactra Vedbem Imperall
-         (foto enviada pela loja). */
-      /* Tons (hex) aproximados a partir da foto do catálogo enviado pela loja.
-         Códigos só onde já havia o código Coral confirmado na arte; os demais ficam sem código. */
-      itens: [
-        { id: "gelo",            nome: "Gelo",            hex: "#C9CAC1", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
-        { id: "silverado",       nome: "Silverado",       hex: "#7F807A", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
-        { id: "elefante",        nome: "Elefante",        codigo: "2371-4", hex: "#777872", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
-        { id: "areia",           nome: "Areia",           codigo: "1376-4", hex: "#D1C4AE", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
-        { id: "palha",           nome: "Palha",           hex: "#E0DFC6", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
-        { id: "camurca",         nome: "Camurça",         hex: "#928770", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
-        { id: "algodao-egipcio", nome: "Algodão Egípcio", codigo: "1036-2", hex: "#DAD7C6", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
-        { id: "papel-picado",    nome: "Papel Picado",    hex: "#D7D3CA", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
-        { id: "ovelha",          nome: "Ovelha",          codigo: "1002-4", hex: "#BFBAB4", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" }
-      ]
-    },
-    {
       id: "mercure",
       marca: "Mercure",
       titulo: "Mercure",
@@ -77,6 +55,29 @@ window.ELITI = {
         { id: "jade",             nome: "Jade",             hex: "#5A9989", linhas: ["Premium"],                          imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
         { id: "azul-royal",       nome: "Azul Royal",       hex: "#5C9BD6", linhas: ["Premium"],                          imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" },
         { id: "oceano",           nome: "Oceano",           hex: "#465D82", linhas: ["Premium"],                          imagem: "assets/produtos/mercure-acrilica-premium.webp", imagemAlt: "Lata de Tinta Acrílica Premium Mercure" }
+      ]
+    },
+    {
+      id: "coral",
+      marca: "Coral",
+      titulo: "Coral",
+      linha: "Coleção de cores Coral",
+      /* CONFIRMAR com a loja: códigos e tons (hex) foram tirados da arte de divulgação
+         "Coleção de cores Coral" enviada pela loja. Imagem da lata: Coral Mactra Vedbem Imperall
+         (foto enviada pela loja). */
+      /* Tons (hex) aproximados a partir da foto do catálogo enviado pela loja.
+         Códigos só onde já havia o código Coral confirmado na arte; os demais ficam sem código. */
+      itens: [
+        { id: "branco",          nome: "Branco",          hex: "#F3F3F0", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
+        { id: "gelo",            nome: "Gelo",            hex: "#C9CAC1", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
+        { id: "silverado",       nome: "Silverado",       hex: "#7F807A", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
+        { id: "elefante",        nome: "Elefante",        codigo: "2371-4", hex: "#777872", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
+        { id: "areia",           nome: "Areia",           codigo: "1376-4", hex: "#D1C4AE", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
+        { id: "palha",           nome: "Palha",           hex: "#E0DFC6", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
+        { id: "camurca",         nome: "Camurça",         hex: "#928770", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
+        { id: "algodao-egipcio", nome: "Algodão Egípcio", codigo: "1036-2", hex: "#DAD7C6", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
+        { id: "papel-picado",    nome: "Papel Picado",    hex: "#D7D3CA", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" },
+        { id: "ovelha",          nome: "Ovelha",          codigo: "1002-4", hex: "#BFBAB4", imagem: "assets/produtos/coral-mactra-vedbem-imperall.webp", imagemAlt: "Lata Coral Mactra Vedbem Imperall" }
       ]
     }
     /* Para um novo catálogo, copie um bloco acima, troque id/marca/titulo e cadastre os itens. */

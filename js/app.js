@@ -40,7 +40,7 @@
   var state = {
     itens: (saved.itens || []).filter(function (k) { return ITENS[k]; }),
     atendente: ATEND.some(function (a) { return a.id === saved.atendente; }) ? saved.atendente : (ATEND[0] && ATEND[0].id),
-    aba: CATS.some(function (c) { return c.id === saved.aba; }) ? saved.aba : (CATS[0] && CATS[0].id)
+    aba: CATS[0] && CATS[0].id   // sempre abre no primeiro catálogo da lista
   };
   function persist() { store("eliti-selecao-v2", state); }
   function isSel(k) { return state.itens.indexOf(k) !== -1; }
